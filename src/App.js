@@ -7,6 +7,7 @@ import Navbar from './components/Navbar'
 import Signup from './components/user/Signup'
 import './assets/scss/app.scss'
 import Albums from './components/albums/Albums'
+import SingleAlbum from './components/albums/SingleAlbum'
 
 const App = () => {
 	return (
@@ -32,7 +33,7 @@ const App = () => {
 								<Albums />
 							</ProtectedRoute>
 							<ProtectedRoute path="/:albumId">
-								<h1>Single Albums</h1>
+								<SingleAlbum />
 							</ProtectedRoute>
 							<ProtectedRoute path="/create">
 								<CreateAlbum />
