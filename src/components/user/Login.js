@@ -1,28 +1,27 @@
 import { useState, useRef } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { useAuth } from '../contexts/AuthContext'
+import { useAuth } from '../../contexts/AuthContext'
 
-const Signup = () => {
-	const { signup } = useAuth()
+const Login = () => {
+	const { login } = useAuth()
 	const [error, setError] = useState(null)
 	const [loading, setLoading] = useState(false)
 	const emailRef = useRef()
 	const passwordRef = useRef()
-	const confirmRef = useRef()
 	const navigate = useNavigate()
 
 	const onSubmit = async e => {
 		e.preventDefault();
 
-		if (passwordRef.current.value !== confirmRef.current.value) {
-			return setError('The passwords does not match.');
+		if (!emailRef.current.value || !passwordRef.current.value) {
+			return setError('Please enter both email and password.');
 		}
 
 		setError(null);
 
 		try {
 			setLoading(true);
-			await signup(emailRef.current.value, passwordRef.current.value);
+			await login(emailRef.current.value, passwordRef.current.value);
 			navigate('/');
 		} catch (error) {
 			setError(error.message);
@@ -33,7 +32,7 @@ const Signup = () => {
 	return (
 		<div className="card">
 			<div className="card-content">
-				<h1 className="title">Sign Up</h1>
+				<h1 className="title">Log In</h1>
 				<form className="content" onSubmit={onSubmit}>
 					<div className="field">
 						<label className="label" htmlFor="email">Email</label>
@@ -54,30 +53,21 @@ const Signup = () => {
 						</div>
 					</div>
 					<div className="field">
-						<label className="label" htmlFor="password-confirm">Confirm Password</label>
-						<div className="control has-icons-left">
-							<input className="input" type="password" id="password-confirm" placeholder="Password" ref={confirmRef} />
-							<span className="icon is-small is-left">
-								<i className="fas fa-lock"></i>
-							</span>
-						</div>
-					</div>
-					<div className="field">
 						<div className="control">
-							<button className="button is-success" disabled={loading} type="submit">Create account</button>
+							<button className="button is-success" disabled={loading} type="submit">Login</button>
 						</div>
 					</div>
 				</form>
 				{error && (
-					<div class="notification">
-						<button class="delete"></button>
+					<div className="notification">
+						<button className="delete"></button>
 						{error}
 					</div>
 				)}
-				<small>Already have an account? <Link to="/login">Log in</Link></small>
+				<small>Don't have an account? <Link to="/signup">Sign up</Link></small>
 			</div>
 		</div>
 	)
 }
 
-export default Signup
+export default Login
