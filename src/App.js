@@ -1,16 +1,19 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import AuthContextProvider from './contexts/AuthContext'
-import Navbar from './components/Navbar'
+import ProtectedRoute from './decorators/ProtectedRoute'
+import CreateAlbum from './components/albums/CreateAlbum'
 import Login from './components/Login'
+import Navbar from './components/Navbar'
 import Signup from './components/Signup'
 import './assets/scss/app.scss'
+import Albums from './components/albums/Albums'
 
 const App = () => {
 	return (
 		<Router>
 			<AuthContextProvider>
 				<Navbar />
-				<main className="container">
+				<main className="section">
 					<Routes>
 						<Route path="/">
 							<h1>Photo Review App</h1>
@@ -25,8 +28,17 @@ const App = () => {
 							<h1>Forgot Password</h1>
 						</Route>
 						<Route path="albums">
-							<h1>Albums</h1>
+							<ProtectedRoute path="/">
+								<Albums />
+							</ProtectedRoute>
+							<ProtectedRoute path="/:albumId">
+								<h1>Single Albums</h1>
+							</ProtectedRoute>
+							<ProtectedRoute path="/create">
+								<CreateAlbum />
+							</ProtectedRoute>
 						</Route>
+						<Route path="*" element={<h1>Page not found</h1>} />
 					</Routes>
 				</main>
 			</AuthContextProvider>
