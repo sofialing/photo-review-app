@@ -1,4 +1,5 @@
-import React from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faThumbsUp, faThumbsDown } from '@fortawesome/free-solid-svg-icons'
 
 const ImageCard = ({ image }) => {
 	return (
@@ -13,10 +14,10 @@ const ImageCard = ({ image }) => {
 			</div>
 			<footer className="card-footer">
 				<div className="card-footer-item">
-					<i className="fas fa-thumbs-down"></i>
+					<FontAwesomeIcon icon={faThumbsDown} />
 				</div>
 				<div className="card-footer-item">
-					<i className="fas fa-thumbs-up"></i>
+					<FontAwesomeIcon icon={faThumbsUp} />
 				</div>
 			</footer>
 		</div>

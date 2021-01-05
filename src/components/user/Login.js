@@ -1,5 +1,7 @@
 import { useState, useRef } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons'
 import { useAuth } from '../../contexts/AuthContext'
 
 const Login = () => {
@@ -39,7 +41,7 @@ const Login = () => {
 						<div className="control has-icons-left has-icons-right">
 							<input className="input" id="email" type="email" placeholder="Email" ref={emailRef} />
 							<span className="icon is-small is-left">
-								<i className="fas fa-envelope"></i>
+								<FontAwesomeIcon icon={faEnvelope} />
 							</span>
 						</div>
 					</div>
@@ -48,7 +50,7 @@ const Login = () => {
 						<div className="control has-icons-left">
 							<input className="input" type="password" id="password" placeholder="Password" ref={passwordRef} />
 							<span className="icon is-small is-left">
-								<i className="fas fa-lock"></i>
+								<FontAwesomeIcon icon={faLock} />
 							</span>
 						</div>
 					</div>
