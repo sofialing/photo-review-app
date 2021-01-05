@@ -14,7 +14,7 @@ const UploadImages = ({ albumId }) => {
 			setNotification(error)
 		}
 		if (isSuccess) {
-			setNotification('Images successfully uploaded!')
+			setNotification('Image(s) successfully uploaded to album.')
 			setImages(null)
 		}
 	}, [error, isSuccess])

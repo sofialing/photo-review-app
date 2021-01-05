@@ -15,7 +15,7 @@ const SingleAlbum = () => {
 					<h1 className="title">{album.title}</h1>
 					<p className="subtitle">{images.length} images</p>
 				</div>
-				<ButtonGroup />
+				<ButtonGroup albumId={albumId} />
 			</header>
 			<ImagesGrid images={images} />
 			<UploadImages albumId={albumId} />

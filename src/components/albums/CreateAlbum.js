@@ -1,5 +1,7 @@
 import { useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faImages, faPlusSquare } from '@fortawesome/free-solid-svg-icons'
 import { db } from '../../firebase'
 import { useAuth } from '../../contexts/AuthContext'
 
@@ -41,13 +43,18 @@ const CreateAlbum = () => {
 							<div className="control has-icons-left has-icons-right">
 								<input className="input" id="title" type="text" placeholder="Album title" ref={titleRef} />
 								<span className="icon is-small is-left">
-									<i className="far fa-images"></i>
+									<FontAwesomeIcon icon={faImages} />
 								</span>
 							</div>
 						</div>
-						<div className="field">
+						<div className="field mt-4">
 							<div className="control">
-								<button className="button is-success" disabled={loading} type="submit">Create album</button>
+								<button className="button is-primary" disabled={loading} type="submit">
+									<span className="icon is-small">
+										<FontAwesomeIcon icon={faPlusSquare} />
+									</span>
+									<strong>Create Album</strong>
+								</button>
 							</div>
 						</div>
 					</form>

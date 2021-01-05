@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faTrash, faShareSquare } from '@fortawesome/free-solid-svg-icons'
 import imageFolder from '../../assets/images/image-folder.png'
+import { deleteAlbum } from '../../helpers'
 
 const AlbumCard = ({ album }) => {
 	return (
@@ -26,7 +27,11 @@ const AlbumCard = ({ album }) => {
 					<FontAwesomeIcon icon={faEdit} title="Edit album" />
 				</div>
 				<div className="card-footer-item">
-					<FontAwesomeIcon icon={faTrash} title="Delete album" />
+					<FontAwesomeIcon
+						icon={faTrash}
+						onClick={() => deleteAlbum(album.id)}
+						title="Delete album"
+					/>
 				</div>
 			</footer>
 		</div>
