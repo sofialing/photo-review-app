@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faEdit, faTrash, faShareSquare } from '@fortawesome/free-solid-svg-icons'
 import imageFolder from '../../assets/images/image-folder.png'
 
 const AlbumCard = ({ album }) => {
@@ -20,10 +20,13 @@ const AlbumCard = ({ album }) => {
 			</div>
 			<footer className="card-footer">
 				<div className="card-footer-item">
-					<FontAwesomeIcon icon={faEdit} />
+					<FontAwesomeIcon icon={faShareSquare} title="Share album" />
 				</div>
 				<div className="card-footer-item">
-					<FontAwesomeIcon icon={faTrash} />
+					<FontAwesomeIcon icon={faEdit} title="Edit album" />
+				</div>
+				<div className="card-footer-item">
+					<FontAwesomeIcon icon={faTrash} title="Delete album" />
 				</div>
 			</footer>
 		</div>
