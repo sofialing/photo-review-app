@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import AuthContextProvider from './contexts/AuthContext'
+import ReviewContextProvider from './contexts/ReviewContext'
 import ProtectedRoute from './decorators/ProtectedRoute'
 import CreateAlbum from './components/albums/CreateAlbum'
 import Login from './components/user/Login'
@@ -9,8 +10,9 @@ import CreateAccount from './components/user/CreateAccount'
 import './assets/scss/app.scss'
 import Albums from './components/albums/Albums'
 import SingleAlbum from './components/albums/SingleAlbum'
-import Review from './components/review/Review'
+import ReviewAlbum from './components/review/ReviewAlbum'
 import NotFoundPage from './components/NotFoundPage'
+import ReviewCompleted from './components/review/ReviewCompleted'
 
 const App = () => {
 	return (
@@ -42,9 +44,16 @@ const App = () => {
 								<CreateAlbum />
 							</ProtectedRoute>
 						</Route>
-						<Route path="review/:slug/:reviewId" >
-							<Review />
-						</Route>
+						<ReviewContextProvider>
+							<Route path="review" >
+								<Route path="/:slug/:reviewId">
+									<ReviewAlbum />
+								</Route>
+								<Route path="/completed">
+									<ReviewCompleted />
+								</Route>
+							</Route>
+						</ReviewContextProvider>
 						<Route path="*" element={<NotFoundPage />} />
 					</Routes>
 				</main>
