@@ -3,7 +3,7 @@ import AuthContextProvider from './contexts/AuthContext'
 import ProtectedRoute from './decorators/ProtectedRoute'
 import CreateAlbum from './components/albums/CreateAlbum'
 import Login from './components/user/Login'
-import NavbarTest from './components/NavbarTest'
+import Navbar from './components/Navbar'
 import LandingPage from './components/LandingPage'
 import CreateAccount from './components/user/CreateAccount'
 import './assets/scss/app.scss'
@@ -16,7 +16,7 @@ const App = () => {
 	return (
 		<Router>
 			<AuthContextProvider>
-				<NavbarTest />
+				<Navbar />
 				<main className="section">
 					<Routes>
 						<Route path="/">
