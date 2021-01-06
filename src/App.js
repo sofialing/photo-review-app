@@ -9,6 +9,8 @@ import CreateAccount from './components/user/CreateAccount'
 import './assets/scss/app.scss'
 import Albums from './components/albums/Albums'
 import SingleAlbum from './components/albums/SingleAlbum'
+import Review from './components/review/Review'
+import NotFoundPage from './components/NotFoundPage'
 
 const App = () => {
 	return (
@@ -40,7 +42,10 @@ const App = () => {
 								<CreateAlbum />
 							</ProtectedRoute>
 						</Route>
-						<Route path="*" element={<h1>Page not found</h1>} />
+						<Route path="review/:slug/:reviewId" >
+							<Review />
+						</Route>
+						<Route path="*" element={<NotFoundPage />} />
 					</Routes>
 				</main>
 			</AuthContextProvider>
