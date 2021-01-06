@@ -1,7 +1,9 @@
+/* eslint-disable no-useless-escape */
 /**
  * Helper Functions
  */
 import { db, storage } from '../firebase';
+import { nanoid } from 'nanoid'
 
 /**
  * Delete an album from Firebase
@@ -39,7 +41,7 @@ export const updateAlbumTitle = async (id, title) => {
 /**
  * Get review link for album (review/slug/review_id)
  *
- * @param {Sting} id		The id of the album to share
+ * @param {String} id		The id of the album to share
  */
 export const getReviewLink = async (id) => {
 	const doc = await db.collection('albums').doc(id).get()
@@ -48,6 +50,36 @@ export const getReviewLink = async (id) => {
 	return `${window.location.origin}/review/${slugify(title)}/${review_id}`
 }
 
+/**
+ * Creates a new album with approved photos
+ * @param {Object} oldAlbum	Album used as reference
+ * @param {Array} photos 	Photos to add to new album
+ */
+export const submitPhotoReview = async (oldAlbum, photos) => {
+	try {
+		const currentTime = new Date().toISOString().slice(0, 10);
+
+		// create new album
+		const albumRef = await db.collection('albums').add({
+			...oldAlbum,
+			title: `${oldAlbum.title}_${currentTime}`,
+			review_id: nanoid(6)
+		})
+
+		// add images to new album
+		photos.forEach(async photo => {
+			await db.collection('images').add({
+				...photo,
+				album: albumRef
+			})
+		})
+
+		console.log('album created')
+
+	} catch (error) {
+		console.log('something went wrong', error.message)
+	}
+}
 
 const slugify = (string) => {
 	const a = 'àáâäæãåāăąçćčđďèéêëēėęěğǵḧîïíīįìłḿñńǹňôöòóœøōõőṕŕřßśšşșťțûüùúūǘůűųẃẍÿýžźż·/_,:;'

@@ -1,8 +1,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faThumbsUp, faThumbsDown, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { deleteImage } from '../../helpers'
+import ReviewPhoto from '../review/ReviewPhoto'
 
-const ImageCard = ({ image }) => {
+const ImageCard = ({ image, reviewMode = false }) => {
 	return (
 		<div className="card">
 			<div className="card-image">
@@ -11,23 +12,22 @@ const ImageCard = ({ image }) => {
 				</figure>
 			</div>
 			<div className="card-content">
-				<p>{image.name}</p>
+				<small>{image.name}</small>
 			</div>
-			<footer className="card-footer">
-				<div className="card-footer-item">
-					<FontAwesomeIcon
-						icon={faTrash}
-						onClick={() => deleteImage(image.id, image.path)}
-						title="Remove image from album"
-					/>
-				</div>
-				{/* <div className="card-footer-item">
-					<FontAwesomeIcon icon={faThumbsDown} />
-				</div>
-				<div className="card-footer-item">
-					<FontAwesomeIcon icon={faThumbsUp} />
-				</div> */}
-			</footer>
+			{reviewMode ? (
+				<ReviewPhoto photo={image} />
+			) : (
+					<footer className="card-footer">
+						<div className="card-footer-item">
+							<FontAwesomeIcon
+								icon={faTrash}
+								onClick={() => deleteImage(image.id, image.path)}
+								title="Remove image from album"
+							/>
+						</div>
+					</footer>
+
+				)}
 		</div>
 	)
 }
