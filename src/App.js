@@ -2,17 +2,17 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import AuthContextProvider from './contexts/AuthContext'
 import ReviewContextProvider from './contexts/ReviewContext'
 import ProtectedRoute from './decorators/ProtectedRoute'
-import CreateAlbum from './components/albums/CreateAlbum'
+import CreateAlbumPage from './components/pages/CreateAlbumPage'
 import Login from './components/user/Login'
-import Navbar from './components/Navbar'
-import LandingPage from './components/LandingPage'
+import Navbar from './components/partials/Navbar'
+import LandingPage from './components/pages/LandingPage'
 import CreateAccount from './components/user/CreateAccount'
-import './assets/scss/app.scss'
-import Albums from './components/albums/Albums'
-import SingleAlbum from './components/albums/SingleAlbum'
+import AlbumsPage from './components/pages/AlbumsPage'
+import SingleAlbumPage from './components/pages/SingleAlbumPage'
 import ReviewAlbum from './components/review/ReviewAlbum'
-import NotFoundPage from './components/NotFoundPage'
+import NotFoundPage from './components/pages/NotFoundPage'
 import ReviewCompleted from './components/review/ReviewCompleted'
+import './assets/scss/app.scss'
 
 const App = () => {
 	return (
@@ -35,13 +35,13 @@ const App = () => {
 						</Route>
 						<Route path="albums">
 							<ProtectedRoute path="/">
-								<Albums />
+								<AlbumsPage />
 							</ProtectedRoute>
 							<ProtectedRoute path="/:albumId">
-								<SingleAlbum />
+								<SingleAlbumPage />
 							</ProtectedRoute>
 							<ProtectedRoute path="/create">
-								<CreateAlbum />
+								<CreateAlbumPage />
 							</ProtectedRoute>
 						</Route>
 						<ReviewContextProvider>

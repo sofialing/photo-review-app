@@ -3,7 +3,7 @@ import { db } from '../firebase'
 
 const useAlbum = (albumId) => {
 	const [album, setAlbum] = useState(null)
-	const [images, setImages] = useState([])
+	const [photos, setPhotos] = useState([])
 	const [loading, setLoading] = useState(true)
 
 	useEffect(() => {
@@ -18,20 +18,20 @@ const useAlbum = (albumId) => {
 	}, [albumId])
 
 	useEffect(() => {
-		const unsubscribe = db.collection('images')
+		const unsubscribe = db.collection('photos')
 			.where('album', '==', db.collection('albums').doc(albumId))
 			.onSnapshot(snapshot => {
 				setLoading(true)
-				const _images = []
+				const _photos = []
 
 				snapshot.forEach(doc => {
-					_images.push({
+					_photos.push({
 						id: doc.id,
 						...doc.data(),
 					})
 				})
 
-				setImages(_images)
+				setPhotos(_photos)
 				setLoading(false)
 			});
 
@@ -39,7 +39,7 @@ const useAlbum = (albumId) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [albumId])
 
-	return { album, images, loading }
+	return { album, photos, loading }
 }
 
 export default useAlbum

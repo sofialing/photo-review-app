@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import ImagesGrid from '../albums/ImagesGrid'
+import PhotosGrid from '../albums/PhotosGrid'
 import { useReview } from '../../contexts/ReviewContext'
 import { submitPhotoReview } from '../../helpers/index'
 
@@ -30,7 +30,7 @@ const ReviewAlbum = () => {
 				<h1 className="title">{album.title}</h1>
 				<p className="subtitle">{photos.length} photos by {album.owner_name}</p>
 			</header>
-			<ImagesGrid images={photos} reviewMode={true} />
+			<PhotosGrid photos={photos} reviewMode={true} />
 			<aside className="level is-mobile">
 				<div className="level-item has-text-centered">
 					<div>

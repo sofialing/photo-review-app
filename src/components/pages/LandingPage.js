@@ -1,15 +1,14 @@
 import { Link } from 'react-router-dom'
-import photoSharing from '../assets/images/photo-sharing.png'
+import imageSrc from '../../assets/images/photo-sharing.png'
 
 const LandingPage = () => {
 	return (
 		<div className="container has-text-centered">
-			<figure className="image">
-				<img src={photoSharing} alt="" />
-			</figure>
-			<h1 className="title">Photo Review App</h1>
-			<p className="subtitle is-6">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut.</p>
-
+			<header className="mb-5">
+				<img src={imageSrc} alt="" />
+				<h1 className="title">Photo Review App</h1>
+				<p className="subtitle is-6">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut.</p>
+			</header>
 			<div className="field is-grouped is-justify-content-center">
 				<div className="control">
 					<Link to="/login" className="button is-rounded is-primary">

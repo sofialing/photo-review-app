@@ -6,7 +6,7 @@ $primary: #417CF2;
 $link: $primary;
 $blue: #6B98F2;
 $light: #D0DCF2;
-$dark: #0D0D0D;
+$dark: #263238;
 $orange: #F2AB6D;
 // $success: #92E3A9;
 // $danger: #FF725E;
@@ -134,4 +134,26 @@ main {
 .fa-thumbs-down:hover,
 .fa-thumbs-down.is-active {
 	@extend .has-text-danger;
+}
+
+.albums-page {
+	header {
+		display: flex;
+		justify-content: space-between;
+	}
+	.button strong {
+		display: none;
+	}
+	.button .icon {
+		margin-right: calc(-0.5em - 1px) !important;
+	}
+}
+
+
+.spinner-container {
+	text-align: center;
+	margin: 3rem auto;
+	.fa-spinner {
+		@extend .has-text-light;
+	}
 }

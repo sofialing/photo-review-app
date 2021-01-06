@@ -6,6 +6,21 @@ import { db, storage } from '../firebase';
 import { nanoid } from 'nanoid'
 
 /**
+ * Create new album in Firebase
+ *
+ * @param {String} title
+ * @param {Object} user
+ */
+export const createAlbum = (title, user) => {
+	return db.collection('albums').add({
+		owner_id: user.uid,
+		owner_name: user.displayName,
+		review_id: nanoid(6),
+		title,
+	})
+}
+
+/**
  * Delete an album from Firebase
  *
  * @param {String} id		The id of the album to delete
@@ -16,15 +31,15 @@ export const deleteAlbum = async id => {
 }
 
 /**
- * Delete an image from Firebase and storage
+ * Delete an photo from Firebase and storage
  *
- * @param {String} id		The id of the image to delete
- * @param {String} path		The path of the image to delete
+ * @param {String} id		The id of the photo to delete
+ * @param {String} path		The path of the photo to delete
  */
-export const deleteImage = async (id, path) => {
+export const deletePhoto = async (id, path) => {
 	// delete document from firestore
-	await db.collection('images').doc(id).delete();
-	// delete image from storage
+	await db.collection('photos').doc(id).delete();
+	// delete photo from storage
 	return await storage.ref(path).delete();
 }
 
@@ -66,9 +81,9 @@ export const submitPhotoReview = async (oldAlbum, photos) => {
 			review_id: nanoid(6)
 		})
 
-		// add images to new album
+		// add photos to new album
 		photos.forEach(async photo => {
-			await db.collection('images').add({
+			await db.collection('photos').add({
 				...photo,
 				album: albumRef
 			})

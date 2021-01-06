@@ -1,21 +1,21 @@
 import { useCallback, useState, useEffect } from 'react'
 import { useDropzone } from 'react-dropzone'
-import useUploadImages from '../../hooks/useUploadImages'
+import useUploadPhotos from '../../hooks/useUploadPhotos'
 
 const fileTypes = 'image/gif, image/jpeg, image/png'
 
-const UploadImages = ({ albumId }) => {
-	const [images, setImages] = useState(null)
+const UploadPhotos = ({ albumId }) => {
+	const [photos, setPhotos] = useState(null)
 	const [notification, setNotification] = useState(null)
-	const { uploadProgress, error, isSuccess } = useUploadImages(images, albumId);
+	const { uploadProgress, error, isSuccess } = useUploadPhotos(photos, albumId);
 
 	useEffect(() => {
 		if (error) {
 			setNotification(error)
 		}
 		if (isSuccess) {
-			setNotification('Image(s) successfully uploaded to album.')
-			setImages(null)
+			setNotification('Photo(s) successfully uploaded to album.')
+			setPhotos(null)
 		}
 	}, [error, isSuccess])
 
@@ -23,7 +23,7 @@ const UploadImages = ({ albumId }) => {
 		setNotification(null)
 
 		if (acceptedFiles.length) {
-			setImages(acceptedFiles)
+			setPhotos(acceptedFiles)
 		}
 	}, [])
 
@@ -38,8 +38,8 @@ const UploadImages = ({ albumId }) => {
 			<div {...getRootProps({ className: 'dropzone' })}>
 				<input {...getInputProps()} />
 				{isDragActive
-					? <p>Drop the files here ...</p>
-					: <p>Drag 'n' drop some files here, or click to select files</p>
+					? <p>Drop the photos here ...</p>
+					: <p>Drag 'n' drop photos here, or click to select photos</p>
 				}
 			</div>
 			{uploadProgress !== null && (
@@ -55,4 +55,4 @@ const UploadImages = ({ albumId }) => {
 	)
 }
 
-export default UploadImages
+export default UploadPhotos

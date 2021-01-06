@@ -36,7 +36,7 @@ const ReviewContextProvider = ({ children }) => {
 	useEffect(() => {
 		if (!album) return;
 
-		const unsubscribe = db.collection('images')
+		const unsubscribe = db.collection('photos')
 			.where('album', '==', db.collection('albums').doc(album.id))
 			.onSnapshot(snapshot => {
 				setLoading(true)
