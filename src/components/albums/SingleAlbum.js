@@ -11,8 +11,8 @@ const SingleAlbum = () => {
 
 	return album && images && (
 		<div className="container">
-			<header className="is-flex is-justify-content-space-between">
-				<div>
+			<header className="">
+				<div className="mb-5">
 					<h1 className="title">{album.title}</h1>
 					<p className="subtitle">{images.length} images</p>
 				</div>

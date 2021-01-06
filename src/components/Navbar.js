@@ -7,22 +7,21 @@ const Navbar = () => {
 	return (
 		<nav className="navbar has-background-dark">
 			<div className="container">
-				<ul className="navbar-menu">
-					<li className="navbar-item">
-						<NavLink to="/" className="has-text-white-ter">
+				<ul className="nav-list">
+					<li className="nav-list-item">
+						<NavLink to="/">
 							<FontAwesomeIcon icon={faHome} title="Go to home page" />
 							<small>Home</small>
 						</NavLink>
 					</li>
-					<li className="navbar-item">
-						<NavLink to="/albums" className="has-text-white-ter">
+					<li className="nav-list-item">
+						<NavLink to="/albums">
 							<FontAwesomeIcon icon={faImages} title="Go to album page" />
 							<small>Albums</small>
 						</NavLink>
-
 					</li>
-					<li className="navbar-item">
-						<NavLink to="/profile" className="has-text-white-ter">
+					<li className="nav-list-item">
+						<NavLink to="/profile">
 							<FontAwesomeIcon icon={faUser} title="Go to profile page" />
 							<small>Profile</small>
 						</NavLink>

@@ -2,21 +2,136 @@
 @import url('https://fonts.googleapis.com/css?family=Nunito:400,700');
 
 // Colors
+$primary: #417CF2;
+$link: $primary;
+$blue: #6B98F2;
+$light: #D0DCF2;
+$dark: #0D0D0D;
+$orange: #F2AB6D;
+// $success: #92E3A9;
+// $danger: #FF725E;
 
 // Update Bulma's global variables
 $family-sans-serif: 'Nunito', sans-serif;
 
 // Update Bulma's component variables
 
-
 // Import only what you need from Bulma
-@import "../../../node_modules/bulma/sass/utilities/_all.sass";
-@import "../../../node_modules/bulma/sass/base/_all.sass";
-@import "../../../node_modules/bulma/sass/elements/button.sass";
-@import "../../../node_modules/bulma/sass/elements/container.sass";
-@import "../../../node_modules/bulma/sass/elements/title.sass";
-@import "../../../node_modules/bulma/sass/form/_all.sass";
-@import "../../../node_modules/bulma/sass/components/navbar.sass";
-@import "../../../node_modules/bulma/sass/layout/hero.sass";
-@import "../../../node_modules/bulma/sass/layout/section.sass";
+@import "../../../node_modules/bulma/bulma.sass";
+// @import "../../../node_modules/bulma/sass/utilities/_all.sass";
+// @import "../../../node_modules/bulma/sass/base/_all.sass";
+// @import "../../../node_modules/bulma/sass/elements/button.sass";
+// @import "../../../node_modules/bulma/sass/elements/container.sass";
+// @import "../../../node_modules/bulma/sass/elements/title.sass";
+// @import "../../../node_modules/bulma/sass/form/_all.sass";
+// @import "../../../node_modules/bulma/sass/components/navbar.sass";
+// @import "../../../node_modules/bulma/sass/layout/hero.sass";
+// @import "../../../node_modules/bulma/sass/layout/section.sass";
 
+body {
+	@extend .has-background-grey-darker;
+	width: 100vw;
+	height: 100vh;
+	height: calc(var(--vh, 1vh) * 100);
+
+	@include from($tablet) {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+}
+
+#app {
+	@extend .has-background-white-ter;
+	position: relative;
+	height: 100vh;
+	height: calc(var(--vh, 1vh) * 100);
+	overflow: hidden;
+
+	@include from($tablet) {
+		box-shadow: 1px 4px 12px #00000072;
+		width: 414px;
+		height: 736px;
+	}
+}
+
+main {
+	position: relative;
+	padding-bottom: 8rem !important;
+	height: 100%;
+	overflow-y: scroll;
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+	&::-webkit-scrollbar {
+		display: none;
+	}
+}
+.dropzone {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 20px;
+	border-color: #eeeeee;
+	border-width: 2px;
+	border-radius: 2px;
+	border-style: dashed;
+	background-color: #fafafa;
+	outline: none;
+	transition: border .3s ease-in-out;
+	&:hover {
+		cursor: pointer;
+	}
+}
+
+.navbar {
+	height: 70px;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	.nav-list {
+		width:100%;
+		margin: 0;
+		display: flex;
+		justify-content: space-around;
+	}
+	.nav-list-item {
+		padding: .25rem 0 0;
+		a {
+			@extend .has-text-grey-lighter;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			padding: .75rem;
+
+			small {
+				line-height: 1;
+				letter-spacing: .05em;
+				margin-top: .75rem;
+			}
+			&.active {
+				@extend .has-text-white-ter;
+			}
+		}
+	}
+}
+
+.fa-thumbs-up,
+.fa-thumbs-down {
+	@extend .has-text-grey-light;
+	transition: transform .3s ease-in-out, color .3s ease-in-out;
+	&:hover {
+		transform: scale(1.2);
+	}
+}
+
+.fa-thumbs-up:hover,
+.fa-thumbs-up.is-active {
+	@extend .has-text-success;
+}
+
+.fa-thumbs-down:hover,
+.fa-thumbs-down.is-active {
+	@extend .has-text-danger;
+}

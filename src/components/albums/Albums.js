@@ -10,7 +10,7 @@ const Albums = () => {
 
 	return albums && (
 		<div className="container">
-			<h1 className="title">All Albums</h1>
+			<h1 className="title">Albums</h1>
 			<AlbumsGrid albums={albums} />
 			<Link className="button is-primary" to="/albums/create">
 				<span className="icon is-small">
