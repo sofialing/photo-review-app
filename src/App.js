@@ -4,7 +4,7 @@ import ProtectedRoute from './decorators/ProtectedRoute'
 import CreateAlbum from './components/albums/CreateAlbum'
 import Login from './components/user/Login'
 import NavbarTest from './components/NavbarTest'
-import Home from './components/Home'
+import LandingPage from './components/LandingPage'
 import CreateAccount from './components/user/CreateAccount'
 import './assets/scss/app.scss'
 import Albums from './components/albums/Albums'
@@ -18,7 +18,7 @@ const App = () => {
 				<main className="section">
 					<Routes>
 						<Route path="/">
-							<Home />
+							<LandingPage />
 						</Route>
 						<Route path="login">
 							<Login />
