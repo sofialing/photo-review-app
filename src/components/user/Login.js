@@ -56,7 +56,7 @@ const Login = () => {
 					</div>
 					<div className="field">
 						<div className="control">
-							<button className="button is-success" disabled={loading} type="submit">Login</button>
+							<button className="button is-primary" disabled={loading} type="submit">Login</button>
 						</div>
 					</div>
 				</form>
@@ -66,7 +66,7 @@ const Login = () => {
 						{error}
 					</div>
 				)}
-				<small>Don't have an account? <Link to="/signup">Sign up</Link></small>
+				<small>Don't have an account? <Link to="/create-account">Create account</Link></small>
 			</div>
 		</div>
 	)

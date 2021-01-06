@@ -1,4 +1,6 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlusSquare } from '@fortawesome/free-solid-svg-icons'
 import { useAuth } from '../contexts/AuthContext'
 
 const Navbar = () => {
@@ -23,10 +25,13 @@ const Navbar = () => {
 							<div className="buttons">
 								{user
 									? <NavLink to="albums/create" className="button is-primary">
+										<span className="icon is-small">
+											<FontAwesomeIcon icon={faPlusSquare} />
+										</span>
 										<strong>Create Album</strong>
 									</NavLink>
-									: <NavLink to="signup" className="button is-primary">
-										<strong>Sign up</strong>
+									: <NavLink to="create-account" className="button is-primary">
+										<strong>Create Account</strong>
 									</NavLink>}
 
 								{user

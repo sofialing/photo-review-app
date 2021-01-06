@@ -19,8 +19,9 @@ const AuthContextProvider = ({ children }) => {
 		})
 	}, [])
 
-	const signup = (email, password) => {
+	const createAccount = (email, password, displayName) => {
 		return auth.createUserWithEmailAndPassword(email, password)
+			.then(({ user }) => user.updateProfile({ displayName }))
 	}
 
 	const login = (email, password) => {
@@ -41,7 +42,7 @@ const AuthContextProvider = ({ children }) => {
 		login,
 		logout,
 		resetPassword,
-		signup,
+		createAccount,
 	}
 
 	return (

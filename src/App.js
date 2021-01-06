@@ -3,8 +3,9 @@ import AuthContextProvider from './contexts/AuthContext'
 import ProtectedRoute from './decorators/ProtectedRoute'
 import CreateAlbum from './components/albums/CreateAlbum'
 import Login from './components/user/Login'
-import Navbar from './components/Navbar'
-import Signup from './components/user/Signup'
+import NavbarTest from './components/NavbarTest'
+import Home from './components/Home'
+import CreateAccount from './components/user/CreateAccount'
 import './assets/scss/app.scss'
 import Albums from './components/albums/Albums'
 import SingleAlbum from './components/albums/SingleAlbum'
@@ -13,17 +14,17 @@ const App = () => {
 	return (
 		<Router>
 			<AuthContextProvider>
-				<Navbar />
+				<NavbarTest />
 				<main className="section">
 					<Routes>
 						<Route path="/">
-							<h1>Photo Review App</h1>
+							<Home />
 						</Route>
 						<Route path="login">
 							<Login />
 						</Route>
-						<Route path="signup">
-							<Signup />
+						<Route path="create-account">
+							<CreateAccount />
 						</Route>
 						<Route path="forgot-password">
 							<h1>Forgot Password</h1>
