@@ -3,6 +3,7 @@ import useAlbum from '../../hooks/useAlbum'
 import ImagesGrid from './ImagesGrid'
 import UploadImages from './UploadImages'
 import ButtonGroup from './ButtonGroup'
+import ModalBox from '../partials/ModalBox'
 
 const SingleAlbum = () => {
 	const { albumId } = useParams()
@@ -17,6 +18,7 @@ const SingleAlbum = () => {
 				</div>
 				<ButtonGroup albumId={albumId} />
 			</header>
+			<ModalBox albumId={albumId} />
 			<ImagesGrid images={images} />
 			<UploadImages albumId={albumId} />
 		</div>

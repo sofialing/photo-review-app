@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { nanoid } from 'nanoid'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faImages, faPlusSquare } from '@fortawesome/free-solid-svg-icons'
 import { db } from '../../firebase'
@@ -23,7 +24,9 @@ const CreateAlbum = () => {
 		try {
 			const albumRef = await db.collection('albums').add({
 				title: titleRef.current.value,
-				owner_id: user.uid
+				owner_id: user.uid,
+				owner_name: user.displayName,
+				review_id: nanoid(6)
 			})
 			navigate(`/albums/${albumRef.id}`)
 		} catch (error) {

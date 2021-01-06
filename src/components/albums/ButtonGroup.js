@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faTrash, faShareSquare } from '@fortawesome/free-solid-svg-icons'
-import { deleteAlbum } from '../../helpers'
+import { deleteAlbum, getReviewLink } from '../../helpers'
 
 const ButtonGroup = ({ albumId }) => {
 	const navigate = useNavigate()
@@ -15,8 +15,9 @@ const ButtonGroup = ({ albumId }) => {
 		console.log('wants to edit album', albumId)
 	}
 
-	const onShareAlbum = () => {
-		console.log('wants to share album', albumId)
+	const onShareAlbum = async () => {
+		const url = await getReviewLink(albumId)
+		console.log('review link:', url);
 	}
 
 	return (

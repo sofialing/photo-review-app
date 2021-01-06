@@ -8,7 +8,7 @@ const ImagesGrid = ({ images }) => {
 	return (
 		<section className="columns is-multiline my-6">
 			{images.map((image, index) => (
-				<article className="column is-3" key={index}>
+				<article className="column is-6" key={index}>
 					<ImageCard image={image} />
 				</article>
 			))}
