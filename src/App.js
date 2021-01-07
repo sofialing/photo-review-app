@@ -9,6 +9,7 @@ import LandingPage from './components/pages/LandingPage'
 import CreateAccountPage from './components/pages/CreateAccountPage'
 import AlbumsPage from './components/pages/AlbumsPage'
 import SingleAlbumPage from './components/pages/SingleAlbumPage'
+import EditAlbumPage from './components/pages/EditAlbumPage'
 import ReviewAlbumPage from './components/pages/ReviewAlbumPage'
 import NotFoundPage from './components/pages/NotFoundPage'
 import ReviewCompleted from './components/review/ReviewCompleted'
@@ -39,6 +40,9 @@ const App = () => {
 							</ProtectedRoute>
 							<ProtectedRoute path="/:albumId">
 								<SingleAlbumPage />
+							</ProtectedRoute>
+							<ProtectedRoute path="/:albumId/edit">
+								<EditAlbumPage />
 							</ProtectedRoute>
 							<ProtectedRoute path="/create">
 								<CreateAlbumPage />
