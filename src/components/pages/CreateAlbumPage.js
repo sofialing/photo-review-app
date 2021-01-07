@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
 import { createAlbum } from '../../helpers'
 import CreateAlbumForm from '../albums/CreateAlbumForm'
+import Notification from '../partials/Notification'
 
 const CreateAlbumPage = () => {
 	const navigate = useNavigate()
@@ -29,12 +30,7 @@ const CreateAlbumPage = () => {
 				<div className="card-content">
 					<h1 className="title">New album</h1>
 					<CreateAlbumForm onCreateAlbum={onCreateAlbum} loading={loading} />
-					{error && (
-						<div className="notification">
-							<button className="delete" onClick={() => setError(false)}></button>
-							{error}
-						</div>
-					)}
+					{error && <Notification message={error} setMessage={setError} type="danger" />}
 				</div>
 			</div>
 		</section>

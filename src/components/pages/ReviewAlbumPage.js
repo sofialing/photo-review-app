@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import PhotosGrid from '../albums/PhotosGrid'
 import { useReview } from '../../contexts/ReviewContext'
 import { submitPhotoReview } from '../../helpers/index'
+import PhotosGrid from '../albums/PhotosGrid'
+import Notification from '../partials/Notification'
 
-const ReviewAlbum = () => {
+const ReviewAlbumPage = () => {
 	const navigate = useNavigate()
 	const { reviewId } = useParams()
 	const { album, photos, loading, approved, rejected, setReviewId } = useReview()
@@ -46,14 +47,9 @@ const ReviewAlbum = () => {
 				</div>
 			</aside>
 			<button className="button is-primary" onClick={onSubmit}>Submit</button>
-			{notification && (
-				<div class="notification is-danger mt-4">
-					<button class="delete" onClick={() => setNotification(null)}></button>
-					{notification}
-				</div>
-			)}
+			{notification && <Notification message={notification} setMessage={notification} />}
 		</section>
 	)
 }
 
-export default ReviewAlbum
+export default ReviewAlbumPage

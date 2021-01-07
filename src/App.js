@@ -3,13 +3,13 @@ import AuthContextProvider from './contexts/AuthContext'
 import ReviewContextProvider from './contexts/ReviewContext'
 import ProtectedRoute from './decorators/ProtectedRoute'
 import CreateAlbumPage from './components/pages/CreateAlbumPage'
-import Login from './components/user/Login'
+import LoginPage from './components/pages/LoginPage'
 import Navbar from './components/partials/Navbar'
 import LandingPage from './components/pages/LandingPage'
-import CreateAccount from './components/user/CreateAccount'
+import CreateAccountPage from './components/pages/CreateAccountPage'
 import AlbumsPage from './components/pages/AlbumsPage'
 import SingleAlbumPage from './components/pages/SingleAlbumPage'
-import ReviewAlbum from './components/review/ReviewAlbum'
+import ReviewAlbumPage from './components/pages/ReviewAlbumPage'
 import NotFoundPage from './components/pages/NotFoundPage'
 import ReviewCompleted from './components/review/ReviewCompleted'
 import './assets/scss/app.scss'
@@ -25,10 +25,10 @@ const App = () => {
 							<LandingPage />
 						</Route>
 						<Route path="login">
-							<Login />
+							<LoginPage />
 						</Route>
 						<Route path="create-account">
-							<CreateAccount />
+							<CreateAccountPage />
 						</Route>
 						<Route path="forgot-password">
 							<h1>Forgot Password</h1>
@@ -45,13 +45,11 @@ const App = () => {
 							</ProtectedRoute>
 						</Route>
 						<ReviewContextProvider>
-							<Route path="review" >
-								<Route path="/:slug/:reviewId">
-									<ReviewAlbum />
-								</Route>
-								<Route path="/completed">
-									<ReviewCompleted />
-								</Route>
+							<Route path="review/:slug/:reviewId" >
+								<ReviewAlbumPage />
+							</Route>
+							<Route path="review/completed">
+								<ReviewCompleted />
 							</Route>
 						</ReviewContextProvider>
 						<Route path="*" element={<NotFoundPage />} />

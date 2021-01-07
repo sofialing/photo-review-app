@@ -1,6 +1,7 @@
 import { useCallback, useState, useEffect } from 'react'
 import { useDropzone } from 'react-dropzone'
 import useUploadPhotos from '../../hooks/useUploadPhotos'
+import Notification from '../partials/Notification'
 
 const fileTypes = 'image/gif, image/jpeg, image/png'
 
@@ -45,12 +46,7 @@ const UploadPhotos = ({ albumId }) => {
 			{uploadProgress !== null && (
 				<progress className="progress is-primary my-5" value={uploadProgress} max="100"></progress>
 			)}
-			{notification && (
-				<div className={`notification my-5 ${error ? 'is-danger' : 'is-success'}`}>
-					<button className="delete" onClick={() => setNotification(null)}></button>
-					{notification}
-				</div>
-			)}
+			{notification && <Notification message={notification} setMessage={setNotification} />}
 		</section>
 	)
 }

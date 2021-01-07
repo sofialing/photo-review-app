@@ -13,13 +13,12 @@ const AuthContextProvider = ({ children }) => {
 
 	useEffect(() => {
 		return auth.onAuthStateChanged(user => {
-			console.log('auth state changed', user)
 			setUser(user)
 			setLoading(false)
 		})
 	}, [])
 
-	const createAccount = (email, password, displayName) => {
+	const createAccount = ({ email, password, displayName }) => {
 		return auth.createUserWithEmailAndPassword(email, password)
 			.then(({ user }) => user.updateProfile({ displayName }))
 	}
