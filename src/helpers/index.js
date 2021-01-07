@@ -76,9 +76,10 @@ export const submitPhotoReview = async (oldAlbum, photos) => {
 
 		// create new album
 		const albumRef = await db.collection('albums').add({
-			...oldAlbum,
+			owner_id: oldAlbum.owner_id,
+			owner_name: oldAlbum.owner_name,
+			review_id: nanoid(6),
 			title: `${oldAlbum.title}_${currentTime}`,
-			review_id: nanoid(6)
 		})
 
 		// add photos to new album
@@ -88,9 +89,6 @@ export const submitPhotoReview = async (oldAlbum, photos) => {
 				album: albumRef
 			})
 		})
-
-		console.log('album created')
-
 	} catch (error) {
 		console.log('something went wrong', error.message)
 	}
