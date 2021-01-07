@@ -23,7 +23,7 @@ const useUploadPhotos = (photos, albumId = null) => {
 		const promises = []
 
 		photos.forEach(photo => {
-			const fileRef = storage.ref(`photos/${user.uid}/${photo.name}`)
+			const fileRef = storage.ref(`photos/${photo.name}`)
 			const uploadTask = fileRef.put(photo)
 			promises.push(uploadTask)
 

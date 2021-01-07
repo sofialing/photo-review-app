@@ -26,7 +26,6 @@ export const createAlbum = (title, user) => {
  * @param {String} id		The id of the album to delete
  */
 export const deleteAlbum = async id => {
-	console.log('wants to delete album with id', id)
 	await db.collection('albums').doc(id).delete();
 }
 
@@ -39,8 +38,12 @@ export const deleteAlbum = async id => {
 export const deletePhoto = async (id, path) => {
 	// delete document from firestore
 	await db.collection('photos').doc(id).delete();
-	// delete photo from storage
-	return await storage.ref(path).delete();
+
+	// check if photo exists in other albums, if not delete it from storage
+	const photos = await db.collection('photos').where('path', '==', path).get()
+	if (photos.empty) {
+		await storage.ref(path).delete()
+	}
 }
 
 /**
