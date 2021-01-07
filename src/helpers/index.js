@@ -21,12 +21,25 @@ export const createAlbum = (title, user) => {
 }
 
 /**
- * Delete an album from Firebase
+ * Delete an album and its photos from Firebase
  *
  * @param {String} id		The id of the album to delete
  */
 export const deleteAlbum = async id => {
-	await db.collection('albums').doc(id).delete();
+	// check if album has photos, if so delete them first
+	const snapshot = await db.collection('photos')
+		.where('album', '==', db.collection('albums').doc(id))
+		.get()
+
+	if (!snapshot.empty) {
+		// album has photos to delete
+		snapshot.docs.forEach(async doc => {
+			await deletePhoto(doc.id, doc.data().path)
+		});
+	}
+
+	// delete document from firestore
+	await db.collection('albums').doc(id).delete()
 }
 
 /**
