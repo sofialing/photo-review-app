@@ -1,33 +1,24 @@
-import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faShareSquare, faEdit } from '@fortawesome/free-solid-svg-icons'
-import { deleteAlbum } from '../../helpers'
 
 const AlbumCardOptions = ({ albumId }) => {
-	const navigate = useNavigate()
-
 	return (
 		<footer className="album-card-options card-footer">
 			<div className="card-footer-item">
-				<FontAwesomeIcon
-					icon={faShareSquare}
-					onClick={() => navigate(`/albums/${albumId}/share`)}
-					title="Share album"
-				/>
+				<Link to={`/albums/${albumId}/share`}>
+					<FontAwesomeIcon icon={faShareSquare} title="Share album" />
+				</Link>
 			</div>
 			<div className="card-footer-item">
-				<FontAwesomeIcon
-					icon={faEdit}
-					onClick={() => navigate(`/albums/${albumId}/edit`)}
-					title="Edit album"
-				/>
+				<Link to={`/albums/${albumId}/edit`}>
+					<FontAwesomeIcon icon={faEdit} title="Edit album" />
+				</Link>
 			</div>
 			<div className="card-footer-item">
-				<FontAwesomeIcon
-					icon={faTrash}
-					onClick={() => deleteAlbum(albumId)}
-					title="Delete album"
-				/>
+				<Link to={`/albums/${albumId}/delete`}>
+					<FontAwesomeIcon icon={faTrash} title="Delete album" />
+				</Link>
 			</div>
 		</footer>
 	)

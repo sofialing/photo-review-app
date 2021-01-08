@@ -21,7 +21,7 @@ const SingleAlbumPage = () => {
 		<section className="album-page container">
 			<header>
 				<h1 className="title is-capitalized">{album.title}</h1>
-				<p className="subtitle">{photos.length} photos</p>
+				<p className="subtitle">{photos.length} {photos.length === 1 ? 'photo' : 'photos'}</p>
 			</header>
 			<PhotosGrid photos={photos} />
 			<ButtonGroup albumId={albumId} />

@@ -149,16 +149,16 @@ main {
 	.button .icon {
 		margin-right: calc(-0.5em - 1px) !important;
 	}
-	.card svg {
-		@extend .has-text-grey-light;
-		transition: transform .3s ease-in-out, color .3s ease-in-out;
-		&:hover {
-			@extend .has-text-primary;
-			transform: scale(1.2);
-		}
-	}
 }
 
+.card svg {
+	@extend .has-text-grey-light;
+	transition: transform .3s ease-in-out, color .3s ease-in-out;
+	&:hover {
+		@extend .has-text-primary;
+		transform: scale(1.2);
+	}
+}
 
 .spinner-container {
 	text-align: center;

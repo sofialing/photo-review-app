@@ -27,7 +27,7 @@ const CreateAlbumForm = ({ onCreateAlbum, loading }) => {
 	}
 
 	return (
-		<form className="create-album" onSubmit={onSubmit}>
+		<form className="create-album mb-5" onSubmit={onSubmit}>
 			<div className="field">
 				<label className="label" htmlFor="title">Enter a name for the album</label>
 				<div className="control has-icons-left">

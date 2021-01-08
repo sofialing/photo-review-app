@@ -7,16 +7,16 @@ const PhotoCardOptions = ({ photo }) => {
 		<footer className="card-footer">
 			<div className="card-footer-item">
 				<FontAwesomeIcon
-					icon={faTrash}
-					onClick={() => deletePhoto(photo.id, photo.path)}
-					title="Remove photo from album"
+					icon={faClone}
+					onClick={() => console.log('Copy photo to new album')}
+					title="Select photo"
 				/>
 			</div>
 			<div className="card-footer-item">
 				<FontAwesomeIcon
-					icon={faClone}
-					onClick={() => console.log('Copy photo to new album')}
-					title="Select photo"
+					icon={faTrash}
+					onClick={() => deletePhoto(photo.id, photo.path)}
+					title="Remove photo from album"
 				/>
 			</div>
 		</footer>
