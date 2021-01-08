@@ -11,6 +11,7 @@ import AlbumsPage from './components/pages/AlbumsPage'
 import SingleAlbumPage from './components/pages/SingleAlbumPage'
 import EditAlbumPage from './components/pages/EditAlbumPage'
 import DeleteAlbumPage from './components/pages/DeleteAlbumPage'
+import ShareAlbumPage from './components/pages/ShareAlbumPage'
 import ReviewAlbumPage from './components/pages/ReviewAlbumPage'
 import NotFoundPage from './components/pages/NotFoundPage'
 import ReviewCompleted from './components/review/ReviewCompleted'
@@ -47,6 +48,9 @@ const App = () => {
 							</ProtectedRoute>
 							<ProtectedRoute path="/:albumId/delete">
 								<DeleteAlbumPage />
+							</ProtectedRoute>
+							<ProtectedRoute path="/:albumId/share">
+								<ShareAlbumPage />
 							</ProtectedRoute>
 							<ProtectedRoute path="/create">
 								<CreateAlbumPage />
