@@ -131,12 +131,26 @@ main {
 .fa-thumbs-up:hover,
 .fa-thumbs-up.is-active {
 	@extend .has-text-success;
+	cursor: pointer;
 }
 
 .fa-thumbs-down:hover,
 .fa-thumbs-down.is-active {
 	@extend .has-text-danger;
+	cursor: pointer;
 }
+
+.fa-clone.is-active:hover,
+.fa-clone.is-active {
+	@extend .has-text-primary;
+	cursor: pointer;
+}
+
+.fa-trash.is-disabled:hover {
+	@extend .has-text-grey-light;
+	transform: scale(1);
+}
+
 
 .albums-page {
 	header {

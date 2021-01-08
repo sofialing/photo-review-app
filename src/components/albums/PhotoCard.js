@@ -1,7 +1,7 @@
 import ReviewPhoto from '../review/ReviewPhoto'
 import PhotoCardOptions from '../partials/PhotoCardOptions'
 
-const PhotoCard = ({ photo, reviewMode = false }) => {
+const PhotoCard = ({ photo, setSelectedPhotos, reviewMode = false }) => {
 	return (
 		<div className="card">
 			<div className="card-image">
@@ -12,7 +12,7 @@ const PhotoCard = ({ photo, reviewMode = false }) => {
 			<div className="card-content">
 				<small>{photo.name}</small>
 			</div>
-			{reviewMode ? <ReviewPhoto photo={photo} /> : <PhotoCardOptions photo={photo} />}
+			{reviewMode ? <ReviewPhoto photo={photo} /> : <PhotoCardOptions photo={photo} selectPhoto={setSelectedPhotos} />}
 		</div>
 	)
 }

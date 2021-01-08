@@ -2,7 +2,7 @@
 /**
  * Helper Functions
  */
-import { db, storage } from '../firebase';
+import { db, storage } from '../firebase'
 import { nanoid } from 'nanoid'
 
 /**
@@ -79,6 +79,37 @@ export const getReviewLink = async (id) => {
 	const { title, review_id } = doc.data()
 
 	return `${window.location.origin}/review/${slugify(title)}/${review_id}`
+}
+
+/**
+ * Create new album with photos
+ *
+ * @param {Array} photos	Photos to add to album
+ * @param {String} title	Title of album
+ * @param {Object} user 	Owner of album
+ */
+export const createNewAlbum = async (photos, title, user) => {
+	try {
+		// create new album
+		const albumRef = await db.collection('albums').add({
+			owner_id: user.uid,
+			owner_name: user.displayName,
+			review_id: nanoid(6),
+			title: `${title}_copy`,
+		})
+
+		// add photos to new album
+		photos.forEach(async photo => {
+			await db.collection('photos').add({
+				...photo,
+				album: albumRef
+			})
+		})
+
+		return albumRef
+	} catch (error) {
+		console.log('something went wrong', error.message)
+	}
 }
 
 /**
