@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
+    "@fortawesome/free-brands-svg-icons": "^5.15.1",
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
     "@fortawesome/react-fontawesome": "^0.1.14",
     "@testing-library/jest-dom": "^5.11.4",
@@ -19,6 +20,7 @@
     "react-dropzone": "^11.2.4",
     "react-router-dom": "^6.0.0-beta.0",
     "react-scripts": "4.0.1",
+    "slugify": "^1.4.6",
     "web-vitals": "^0.2.4"
   },
   "scripts": {
