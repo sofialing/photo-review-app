@@ -1,0 +1,76 @@
+.navbar {
+	.navbar-brand .navbar-item {
+		font-size: 1rem;
+		font-weight: 300;
+		letter-spacing: .375em;
+		text-transform: uppercase;
+		padding-left: 0;
+		strong {
+			font-weight: 600;
+		}
+		&:hover,
+		&:focus {
+			background-color: transparent !important;
+		}
+	}
+
+	.navbar-item {
+		letter-spacing: .05em;
+		padding: .75rem 1rem;
+		svg {
+			display: none;
+		}
+	}
+	@include until($tablet) {
+		position: absolute;
+		top: initial !important;
+		bottom: 0 !important;
+		left: 0;
+		right: 0;
+		.navbar-brand {
+			display: none;
+		}
+		.navbar-menu {
+			background-color: transparent;
+			color: $white;
+			display: block;
+			height: 100%;
+			padding: 0;
+			.navbar-end {
+				display: flex;
+				align-items: center;
+				justify-content: space-around;
+				margin: 0;
+				min-height: 4.5rem;
+				width:100%;
+				.navbar-item {
+					color: $grey-lightest;
+					display: flex;
+					flex-direction: column;
+					align-items: center;
+					padding: .75rem;
+					&:hover,
+					&:focus {
+						background-color: transparent;
+					}
+					svg {
+						display: block;
+					}
+					span {
+						font-size: .875rem;
+						font-weight: 300;
+						line-height: 1;
+						letter-spacing: .075em;
+						margin-top: .675rem;
+					}
+					&:last-child {
+						display: none;
+					}
+				}
+			}
+		}
+
+	}
+}
+
+

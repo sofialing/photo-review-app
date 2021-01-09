@@ -10,21 +10,22 @@ const ReviewPhoto = ({ photo }) => {
 
 	const onReject = () => {
 		if (rejected) return
-		setRejected(true)
+
 		setApproved(false)
+		setRejected(true)
+
+		// add photo to array of rejected photos
 		rejectPhoto(photo)
-		// setRejected(prevState => !prevState)
-		// setApproved(false)
-		// rejectPhoto(photo)
 	}
+
 	const onApprove = () => {
 		if (approved) return
-		setApproved(true)
+
 		setRejected(false)
+		setApproved(true)
+
+		// add photo to array of approved photos
 		approvePhoto(photo)
-		// setApproved(prevState => !prevState)
-		// setRejected(false)
-		// approvePhoto(photo)
 	}
 
 	return (
@@ -34,7 +35,8 @@ const ReviewPhoto = ({ photo }) => {
 					className={rejected ? 'is-active' : ''}
 					icon={faThumbsDown}
 					onClick={onReject}
-					title="Reject"
+					size="lg"
+					title="Reject photo"
 				/>
 			</div>
 			<div className="card-footer-item">
@@ -42,7 +44,8 @@ const ReviewPhoto = ({ photo }) => {
 					className={approved ? 'is-active' : ''}
 					icon={faThumbsUp}
 					onClick={onApprove}
-					title="Approve"
+					size="lg"
+					title="Approve photo"
 				/>
 			</div>
 		</footer>

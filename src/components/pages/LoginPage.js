@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
 import LoginForm from '../user/LoginForm'
 import Notification from '../partials/Notification'
+import imageSrc from '../../assets/images/login.png'
 
 const LoginPage = () => {
 	const { login } = useAuth()
@@ -22,7 +23,7 @@ const LoginPage = () => {
 		try {
 			setLoading(true)
 			await login(email, password)
-			navigate('/')
+			navigate('/albums')
 		} catch (error) {
 			setError(error.message)
 			setLoading(false)
@@ -30,18 +31,31 @@ const LoginPage = () => {
 	}
 
 	return (
-		<div className="card">
-			<div className="card-content">
-				<h1 className="title">Log In</h1>
-				<LoginForm onLogin={onLogin} loading={loading} />
-				{error && <Notification message={error} setMessage={setError} type="danger" />}
-			</div>
-			<footer className="card-footer">
-				<div className="card-footer-item">
-					<small>Don't have an account? <Link to="/create-account">Sign up</Link></small>
+		<section className="section">
+			<div className="container">
+				<div className="columns is-vcentered">
+					<div className="column is-4">
+						<div className="card">
+							<div className="card-content">
+								<h1 className="title">Log in</h1>
+								<LoginForm onLogin={onLogin} loading={loading} />
+								{error && <Notification message={error} setMessage={setError} type="danger" />}
+							</div>
+							<footer className="card-footer">
+								<div className="card-footer-item">
+									<small className="is-spaced">New to PhotoReviewer? <Link to="/create-account">Create account</Link></small>
+								</div>
+							</footer>
+						</div>
+					</div>
+					<div className="column is-5 is-offset-1">
+						<figure className="image is-square">
+							<img src={imageSrc} alt="" />
+						</figure>
+					</div>
 				</div>
-			</footer>
-		</div>
+			</div>
+		</section>
 	)
 }
 

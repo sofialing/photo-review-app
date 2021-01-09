@@ -7,12 +7,14 @@ const AlbumsPage = () => {
 	const { albums, loading } = useAlbums()
 
 	return (
-		<section className="albums-page container">
-			<header>
-				<h1 className="title">Albums</h1>
-				<CreateAlbumButton />
-			</header>
-			{loading ? <Spinner /> : <AlbumsGrid albums={albums} />}
+		<section className="albums-page section">
+			<div className="container">
+				<header>
+					<h1 className="title is-1">Albums</h1>
+					<CreateAlbumButton />
+				</header>
+				{loading ? <Spinner /> : <AlbumsGrid albums={albums} />}
+			</div>
 		</section>
 	)
 }

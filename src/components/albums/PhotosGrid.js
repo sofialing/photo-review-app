@@ -8,7 +8,7 @@ const PhotosGrid = ({ photos, setSelectedPhotos, reviewMode = false }) => {
 	return (
 		<section className="columns is-multiline mt-4 mb-6">
 			{photos.map((photo, index) => (
-				<article className="column is-6" key={index}>
+				<article className="column is-3" key={index}>
 					<PhotoCard photo={photo} setSelectedPhotos={setSelectedPhotos} reviewMode={reviewMode} />
 				</article>
 			))}

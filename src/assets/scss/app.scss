@@ -14,9 +14,11 @@ $orange: #F2AB6D;
 
 // Update Bulma's global variables
 $family-sans-serif: canada-type-gibson, sans-serif;
-// $family-sans-serif: 'Nunito', sans-serif;
 
 // Update Bulma's component variables
+$footer-background-color: $dark;
+$footer-color: #fff;
+$footer-padding: 1.5rem;
 
 // Import only what you need from Bulma
 @import "../../../node_modules/bulma/bulma.sass";
@@ -30,44 +32,50 @@ $family-sans-serif: canada-type-gibson, sans-serif;
 // @import "../../../node_modules/bulma/sass/layout/hero.sass";
 // @import "../../../node_modules/bulma/sass/layout/section.sass";
 
-body {
-	@extend .has-background-grey-darker;
-	width: 100vw;
-	height: 100vh;
-	height: calc(var(--vh, 1vh) * 100);
 
-	@include from($tablet) {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-	}
+
+body {
+	@extend .has-navbar-fixed-top;
+	@extend .has-background-white-bis;
+	width: 100vw;
+	min-height: 100vh;
+	// @extend .has-background-grey-darker;
+	// width: 100vw;
+	// height: 100vh;
+	// height: calc(var(--vh, 1vh) * 100);
+
+	// @include from($tablet) {
+	// 	display: flex;
+	// 	justify-content: center;
+	// 	align-items: center;
+	// }
 }
 
 #app {
-	@extend .has-background-white-ter;
-	position: relative;
-	height: 100vh;
-	height: calc(var(--vh, 1vh) * 100);
-	overflow: hidden;
+	// @extend .has-background-white-ter;
+	// position: relative;
+	// height: 100vh;
+	// height: calc(var(--vh, 1vh) * 100);
+	// overflow: hidden;
 
-	@include from($tablet) {
-		box-shadow: 1px 4px 12px #00000072;
-		width: 414px;
-		height: 736px;
-	}
+	// @include from($tablet) {
+	// 	box-shadow: 1px 4px 12px #00000072;
+	// 	width: 414px;
+	// 	height: 736px;
+	// }
 }
 
-main {
-	position: relative;
-	padding-bottom: 8rem !important;
-	height: 100%;
-	overflow-y: scroll;
-	scrollbar-width: none;
-	-ms-overflow-style: none;
-	&::-webkit-scrollbar {
-		display: none;
-	}
-}
+// main {
+// 	position: relative;
+// 	padding-bottom: 8rem !important;
+// 	height: 100%;
+// 	overflow-y: scroll;
+// 	scrollbar-width: none;
+// 	-ms-overflow-style: none;
+// 	&::-webkit-scrollbar {
+// 		display: none;
+// 	}
+// }
 .dropzone {
 	flex: 1;
 	display: flex;
@@ -86,59 +94,29 @@ main {
 	}
 }
 
-.navbar {
-	height: 70px;
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	.nav-list {
-		width:100%;
-		margin: 0;
-		display: flex;
-		justify-content: space-around;
-	}
-	.nav-list-item {
-		padding: .25rem 0 0;
-		a {
-			@extend .has-text-grey-lighter;
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			padding: .75rem;
+.review-page {
 
-			small {
-				line-height: 1;
-				letter-spacing: .05em;
-				margin-top: .75rem;
-			}
-			&.active {
-				@extend .has-text-white-ter;
-			}
+	svg.fa-thumbs-up,
+	svg.fa-thumbs-down {
+		@extend .has-text-grey-light;
+		transition: transform .3s ease-in-out, color .3s ease-in-out;
+		&:hover {
+			transform: scale(1.2);
+			cursor: pointer;
 		}
 	}
-}
 
-.fa-thumbs-up,
-.fa-thumbs-down {
-	@extend .has-text-grey-light;
-	transition: transform .3s ease-in-out, color .3s ease-in-out;
-	&:hover {
-		transform: scale(1.2);
+	svg.fa-thumbs-up:hover,
+	svg.fa-thumbs-up.is-active {
+		@extend .has-text-success;
+	}
+
+	svg.fa-thumbs-down:hover,
+	svg.fa-thumbs-down.is-active {
+		@extend .has-text-danger;
 	}
 }
 
-.fa-thumbs-up:hover,
-.fa-thumbs-up.is-active {
-	@extend .has-text-success;
-	cursor: pointer;
-}
-
-.fa-thumbs-down:hover,
-.fa-thumbs-down.is-active {
-	@extend .has-text-danger;
-	cursor: pointer;
-}
 
 .fa-clone.is-active:hover,
 .fa-clone.is-active {
@@ -187,3 +165,19 @@ main {
 	font-size: .875rem;
 	letter-spacing: .025em;
 }
+
+.landing-page {
+	.image {
+		object-fit: cover;
+	}
+}
+.is-spaced {
+	letter-spacing: .025em;
+}
+
+.is-muted {
+	@extend .has-text-grey;
+	font-weight: 300;
+}
+
+@import "./Navbar";

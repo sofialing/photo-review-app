@@ -4,7 +4,9 @@ import ReviewContextProvider from './contexts/ReviewContext'
 import ProtectedRoute from './decorators/ProtectedRoute'
 import CreateAlbumPage from './components/pages/CreateAlbumPage'
 import LoginPage from './components/pages/LoginPage'
+import LogoutPage from './components/pages/LogoutPage'
 import Navbar from './components/partials/Navbar'
+import Footer from './components/partials/Footer'
 import LandingPage from './components/pages/LandingPage'
 import CreateAccountPage from './components/pages/CreateAccountPage'
 import AlbumsPage from './components/pages/AlbumsPage'
@@ -13,6 +15,7 @@ import EditAlbumPage from './components/pages/EditAlbumPage'
 import DeleteAlbumPage from './components/pages/DeleteAlbumPage'
 import ShareAlbumPage from './components/pages/ShareAlbumPage'
 import ReviewAlbumPage from './components/pages/ReviewAlbumPage'
+import ResetPasswordPage from './components/pages/ResetPasswordPage'
 import NotFoundPage from './components/pages/NotFoundPage'
 import ReviewCompleted from './components/review/ReviewCompleted'
 import './assets/scss/app.scss'
@@ -22,7 +25,7 @@ const App = () => {
 		<Router>
 			<AuthContextProvider>
 				<Navbar />
-				<main className="section">
+				<main>
 					<Routes>
 						<Route path="/">
 							<LandingPage />
@@ -30,11 +33,14 @@ const App = () => {
 						<Route path="login">
 							<LoginPage />
 						</Route>
+						<ProtectedRoute path="/logout">
+							<LogoutPage />
+						</ProtectedRoute>
 						<Route path="create-account">
 							<CreateAccountPage />
 						</Route>
-						<Route path="forgot-password">
-							<h1>Forgot Password</h1>
+						<Route path="reset-password">
+							<ResetPasswordPage />
 						</Route>
 						<Route path="albums">
 							<ProtectedRoute path="/">
@@ -57,16 +63,19 @@ const App = () => {
 							</ProtectedRoute>
 						</Route>
 						<ReviewContextProvider>
-							<Route path="review/:slug/:reviewId" >
-								<ReviewAlbumPage />
-							</Route>
-							<Route path="review/completed">
-								<ReviewCompleted />
+							<Route path="/review">
+								<Route path="/:slug/:reviewId" >
+									<ReviewAlbumPage />
+								</Route>
+								<Route path="/completed">
+									<ReviewCompleted />
+								</Route>
 							</Route>
 						</ReviewContextProvider>
 						<Route path="*" element={<NotFoundPage />} />
 					</Routes>
 				</main>
+				<Footer />
 			</AuthContextProvider>
 		</Router>
 	);

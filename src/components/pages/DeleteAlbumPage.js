@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { deleteAlbum } from '../../helpers'
 import useAlbum from '../../hooks/useAlbum'
 import Notification from '../partials/Notification'
+import imageSrc from '../../assets/images/create-album.png'
 
 const DeleteAlbumPage = () => {
 	const navigate = useNavigate()
@@ -31,20 +32,31 @@ const DeleteAlbumPage = () => {
 	}
 
 	return album && (
-		<section className="container">
-			<div className="card">
-				<div className="card-content">
-					<h1 className="title">Delete album</h1>
-					<p>Are you sure you want to delete the album <em>"{album.title}"</em> and its photos?</p>
-					<div className="field is-grouped mt-5">
-						<div className="control">
-							<button className="button is-primary is-outlined" disabled={loading} onClick={onCancel}>Cancel</button>
-						</div>
-						<div className="control">
-							<button className="button is-primary" disabled={loading} onClick={onDeleteAlbum}>Delete</button>
+		<section className="section">
+			<div className="container">
+				<div className="columns is-vcentered">
+					<div className="column is-4">
+						<div className="card">
+							<div className="card-content">
+								<h1 className="title">Delete album</h1>
+								<p>Are you sure you want to delete the album <em>"{album.title}"</em> and its photos?</p>
+								<div className="field is-grouped mt-5">
+									<div className="control">
+										<button className="button is-primary is-outlined" disabled={loading} onClick={onCancel}>Cancel</button>
+									</div>
+									<div className="control">
+										<button className="button is-primary" disabled={loading} onClick={onDeleteAlbum}>Delete</button>
+									</div>
+								</div>
+								{error && <Notification message={error} setMessage={setError} type="danger" />}
+							</div>
 						</div>
 					</div>
-					{error && <Notification message={error} setMessage={setError} type="danger" />}
+					<div className="column is-5 is-offset-1">
+						<figure className="image is-square">
+							<img src={imageSrc} alt="" />
+						</figure>
+					</div>
 				</div>
 			</div>
 		</section>

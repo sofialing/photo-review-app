@@ -1,29 +1,30 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
-import { createAlbum } from '../../helpers'
-import CreateAlbumForm from '../albums/CreateAlbumForm'
 import Notification from '../partials/Notification'
-import imageSrc from '../../assets/images/upload.png'
+import imageSrc from '../../assets/images/login.png'
 
-const CreateAlbumPage = () => {
-	const navigate = useNavigate()
-	const { user } = useAuth()
-	const [error, setError] = useState(false)
+const LogoutPage = () => {
+	const { logout } = useAuth()
+	const [error, setError] = useState(null)
 	const [loading, setLoading] = useState(false)
+	const navigate = useNavigate()
 
-	const onCreateAlbum = async (title) => {
-		setError(false)
-		setLoading(true)
+	const onLogout = async () => {
+		// reset error
+		setError(null)
 
 		try {
-			const albumRef = await createAlbum(title, user)
-			navigate(`/albums/${albumRef.id}`)
+			setLoading(true)
+			await logout()
+			navigate('/')
 		} catch (error) {
 			setError(error.message)
 			setLoading(false)
 		}
 	}
+
+
 
 	return (
 		<section className="section">
@@ -32,8 +33,16 @@ const CreateAlbumPage = () => {
 					<div className="column is-4">
 						<div className="card">
 							<div className="card-content">
-								<h1 className="title">New album</h1>
-								<CreateAlbumForm onCreateAlbum={onCreateAlbum} loading={loading} />
+								<h1 className="title">Log out</h1>
+								<p>Are you sure you want to log out?</p>
+								<div className="field is-grouped mt-5">
+									<div className="control">
+										<button className="button is-primary" disabled={loading} onClick={onLogout}>Log Out</button>
+									</div>
+									<div className="control">
+										<button className="button is-primary is-outlined" disabled={loading} onClick={() => navigate(-1)}>Cancel</button>
+									</div>
+								</div>
 								{error && <Notification message={error} setMessage={setError} type="danger" />}
 							</div>
 						</div>
@@ -49,4 +58,4 @@ const CreateAlbumPage = () => {
 	)
 }
 
-export default CreateAlbumPage
+export default LogoutPage

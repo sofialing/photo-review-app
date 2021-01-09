@@ -32,6 +32,7 @@ const AuthContextProvider = ({ children }) => {
 	}
 
 	const resetPassword = (email) => {
+		console.log('wants to reset password for', email)
 		return auth.sendPasswordResetEmail(email)
 	}
 

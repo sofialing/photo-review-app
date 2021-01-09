@@ -29,14 +29,18 @@ const SingleAlbumPage = () => {
 	}
 
 	return (
-		<section className="album-page container">
-			<header>
-				<h1 className="title is-capitalized">{album.title}</h1>
-				<p className="subtitle">{photos.length} {photos.length === 1 ? 'photo' : 'photos'}</p>
-			</header>
-			<PhotosGrid photos={photos} setSelectedPhotos={setSelectedPhotos} />
-			<ButtonGroup selectedPhotos={selectedPhotos} onCopyPhotos={onCopyPhotos} />
-			<UploadPhotos albumId={albumId} />
+		<section className="album-page section">
+			<div className="container">
+				<header className="is-flex is-justify-content-space-between">
+					<div>
+						<h1 className="title is-1 is-capitalized">{album.title}</h1>
+						<p className="subtitle">{photos.length} {photos.length === 1 ? 'photo' : 'photos'} uploaded</p>
+					</div>
+					<ButtonGroup selectedPhotos={selectedPhotos} onCopyPhotos={onCopyPhotos} />
+				</header>
+				<PhotosGrid photos={photos} setSelectedPhotos={setSelectedPhotos} />
+				<UploadPhotos albumId={albumId} />
+			</div>
 		</section>
 	)
 }

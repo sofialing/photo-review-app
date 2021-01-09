@@ -60,7 +60,7 @@ const CreateAccountForm = ({ onCreateAccount, loading }) => {
 			</div>
 			<div className="field">
 				<div className="control">
-					<button className="button is-primary mt-3" disabled={loading} type="submit">Create account</button>
+					<button className="button is-primary mt-3" disabled={loading} type="submit">Sign Up</button>
 				</div>
 			</div>
 		</form>

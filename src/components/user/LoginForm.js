@@ -1,4 +1,5 @@
 import { useRef } from 'react'
+import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons'
 
@@ -24,7 +25,10 @@ const LoginForm = ({ onLogin, loading }) => {
 				</div>
 			</div>
 			<div className="field">
-				<label className="label" htmlFor="password">Password</label>
+				<div className="is-flex is-justify-content-space-between">
+					<label className="label" htmlFor="password">Password</label>
+					<small><Link to="/reset-password">Forgot password?</Link></small>
+				</div>
 				<div className="control has-icons-left">
 					<input className="input" type="password" id="password" placeholder="Password" ref={passwordRef} required />
 					<span className="icon is-small is-left">
@@ -34,7 +38,7 @@ const LoginForm = ({ onLogin, loading }) => {
 			</div>
 			<div className="field">
 				<div className="control">
-					<button className="button is-primary mt-3" disabled={loading} type="submit">Login</button>
+					<button className="button is-primary mt-3" disabled={loading} type="submit">Log In</button>
 				</div>
 			</div>
 		</form>
