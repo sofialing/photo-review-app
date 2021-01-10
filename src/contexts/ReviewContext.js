@@ -1,13 +1,14 @@
 import { createContext, useContext, useEffect, useState } from 'react'
-import { db } from '../firebase'
+import { getReviewAlbumById, getPhotosByAlbumId } from '../services/firebase'
+import { useAuth } from './AuthContext'
 
+// Create Review Context
 const ReviewContext = createContext()
+const useReview = () => useContext(ReviewContext)
 
-const useReview = () => {
-	return useContext(ReviewContext)
-}
-
+// Create Review Context Provider
 const ReviewContextProvider = ({ children }) => {
+	const { authGuest } = useAuth()
 	const [reviewId, setReviewId] = useState(null)
 	const [album, setAlbum] = useState(null)
 	const [photos, setPhotos] = useState([])
@@ -16,11 +17,12 @@ const ReviewContextProvider = ({ children }) => {
 	const [approved, setApproved] = useState([])
 	const [rejected, setRejected] = useState([])
 
+	useEffect(() => authGuest(), [authGuest])
+
 	useEffect(() => {
 		if (!reviewId) return;
 
-		db.collection('albums')
-			.where('review_id', '==', reviewId).get()
+		getReviewAlbumById(reviewId)
 			.then(snapshot => {
 				if (!snapshot.empty) {
 					setAlbum({
@@ -28,7 +30,7 @@ const ReviewContextProvider = ({ children }) => {
 						...snapshot.docs[0].data()
 					})
 				} else {
-					setError('Could not find album.')
+					setError('Oh no! Could not find album.')
 				}
 			});
 	}, [reviewId])
@@ -36,8 +38,7 @@ const ReviewContextProvider = ({ children }) => {
 	useEffect(() => {
 		if (!album) return;
 
-		const unsubscribe = db.collection('photos')
-			.where('album', '==', db.collection('albums').doc(album.id))
+		const unsubscribe = getPhotosByAlbumId(album.id)
 			.onSnapshot(snapshot => {
 				setLoading(true)
 				const _photos = []
@@ -57,6 +58,11 @@ const ReviewContextProvider = ({ children }) => {
 
 	}, [album])
 
+	/**
+	 * Add photo to a list of approved photos
+	 *
+	 * @param {Oject} photo The approved photo
+	 */
 	const approvePhoto = photo => {
 		// add photo to array of approved photos
 		setApproved(prevState => [...prevState, photo])
@@ -67,6 +73,11 @@ const ReviewContextProvider = ({ children }) => {
 		}
 	}
 
+	/**
+	 * Add photo to a list of rejected photos
+	 *
+	 * @param {Object} photo The rejected photo
+	 */
 	const rejectPhoto = photo => {
 		// add photo to array of rejected photos
 		setRejected(prevState => [...prevState, photo])

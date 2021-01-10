@@ -13,7 +13,10 @@ const AuthContextProvider = ({ children }) => {
 
 	useEffect(() => {
 		return auth.onAuthStateChanged(user => {
-			setUser(user)
+			console.log('onAuthStateChanged, user', user)
+			if (user && !user.isAnonymous) {
+				setUser(user)
+			}
 			setLoading(false)
 		})
 	}, [])
@@ -32,8 +35,12 @@ const AuthContextProvider = ({ children }) => {
 	}
 
 	const resetPassword = (email) => {
-		console.log('wants to reset password for', email)
 		return auth.sendPasswordResetEmail(email)
+	}
+
+	const authGuest = () => {
+		console.log('authenticate as guest')
+		return auth.signInAnonymously()
 	}
 
 	const contextValues = {
@@ -43,6 +50,7 @@ const AuthContextProvider = ({ children }) => {
 		logout,
 		resetPassword,
 		createAccount,
+		authGuest,
 	}
 
 	return (

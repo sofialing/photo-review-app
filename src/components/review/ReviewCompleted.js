@@ -1,9 +1,6 @@
-import { useLocation } from 'react-router-dom'
 import imageSrc from '../../assets/images/photos-approved.png'
 
-const ReviewCompleted = () => {
-	const { state } = useLocation()
-
+const ReviewCompleted = ({ nrOfPhotos }) => {
 	return (
 		<section className="section">
 			<div className="container">
@@ -12,7 +9,7 @@ const ReviewCompleted = () => {
 						<figure className="image is-square">
 							<img src={imageSrc} alt="photos approved" />
 						</figure>
-						<h1 className="has-text-centered">Thank you! {state.photos} photos approved.</h1>
+						<h1 className="has-text-centered">Thank you! {nrOfPhotos} photos approved.</h1>
 					</div>
 				</div>
 			</div>

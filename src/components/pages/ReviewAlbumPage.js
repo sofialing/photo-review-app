@@ -1,28 +1,46 @@
 import { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { useReview } from '../../contexts/ReviewContext'
-import { submitPhotoReview } from '../../helpers/index'
+import { createReviewedAlbum } from '../../services/firebase'
 import PhotosGrid from '../albums/PhotosGrid'
+import ReviewCompleted from '../review/ReviewCompleted'
+import AlbumNotFound from '../partials/AlbumNotFound'
 import Notification from '../partials/Notification'
 
 const ReviewAlbumPage = () => {
-	const navigate = useNavigate()
 	const { reviewId } = useParams()
-	const { album, photos, loading, approved, rejected, setReviewId } = useReview()
+	const { album, photos, loading, error, approved, rejected, setReviewId } = useReview()
 	const [notification, setNotification] = useState(null)
+	const [completed, setCompleted] = useState(false)
 
 	useEffect(() => {
 		setReviewId(reviewId)
 	}, [reviewId, setReviewId])
 
 	const onSubmit = async () => {
-		if (approved.length + rejected.length === photos.length) {
-			setNotification(null)
-			await submitPhotoReview(album, approved)
-			navigate('/review/completed', { state: { photos: approved.length } })
-		} else {
-			setNotification('You must review all photos before submitting.')
+		// check if all photos have been reviewed before submitting
+		if (approved.length + rejected.length !== photos.length) {
+			return setNotification('You must review all photos before submitting.');
 		}
+
+		try {
+			await createReviewedAlbum(approved, album)
+			setCompleted(true)
+		} catch (error) {
+			setNotification(error.message)
+		}
+	}
+
+	if (error) {
+		return (
+			<AlbumNotFound message={error} />
+		)
+	}
+
+	if (completed) {
+		return (
+			<ReviewCompleted nrOfPhotos={approved.length} />
+		)
 	}
 
 	return !loading && (
