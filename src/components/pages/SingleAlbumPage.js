@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
-import { createNewAlbum } from '../../helpers'
+import { createAlbum, addPhoto } from '../../services/firebase'
 import useAlbum from '../../hooks/useAlbum'
 import PhotosGrid from '../albums/PhotosGrid'
 import UploadPhotos from '../albums/UploadPhotos'
@@ -16,8 +16,17 @@ const SingleAlbumPage = () => {
 	const [selectedPhotos, setSelectedPhotos] = useState([])
 
 	const onCopyPhotos = async () => {
-		const albumRef = await createNewAlbum(selectedPhotos, album.title, user)
-		navigate(`/albums/${albumRef.id}`)
+		try {
+			// create new album and add photos to it
+			const albumRef = await createAlbum(`${album.title}_copy`, user)
+			selectedPhotos.forEach(async photo => (
+				await addPhoto({ ...photo, album: albumRef }))
+			)
+			// redirect to new album
+			navigate(`/albums/${albumRef.id}`)
+		} catch (error) {
+			console.log(error.message)
+		}
 	}
 
 	if (loading) {

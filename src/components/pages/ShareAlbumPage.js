@@ -1,16 +1,18 @@
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { getReviewLink } from '../../helpers'
+import { getReviewLink } from '../../services/firebase'
 import ShareAlbumForm from '../albums/ShareAlbumForm'
 import imageSrc from '../../assets/images/photos-approved.png'
 
 const ShareAlbumPage = () => {
 	const { albumId } = useParams()
-	const [link, setLink] = useState(null)
+	const [link, setLink] = useState('')
 
 	useEffect(() => {
-		getReviewLink(albumId)
-			.then(link => setLink(link))
+		(async () => {
+			const link = await getReviewLink(albumId)
+			setLink(link)
+		})()
 	}, [albumId])
 
 	return (

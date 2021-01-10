@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { db } from '../firebase'
+import { getAlbumById, getPhotosByAlbumId } from '../services/firebase'
 
 const useAlbum = (albumId) => {
 	const [album, setAlbum] = useState(null)
@@ -7,19 +7,13 @@ const useAlbum = (albumId) => {
 	const [loading, setLoading] = useState(true)
 
 	useEffect(() => {
-		db.collection('albums').doc(albumId).get().then(doc => {
-			setAlbum({
-				id: doc.id,
-				...doc.data()
-			})
-			console.log(album)
-		})
-		// eslint-disable-next-line react-hooks/exhaustive-deps
+		getAlbumById(albumId)
+			.then(album => setAlbum({ id: album.id, ...album.data() }))
+			.catch(error => console.log(error))
 	}, [albumId])
 
 	useEffect(() => {
-		const unsubscribe = db.collection('photos')
-			.where('album', '==', db.collection('albums').doc(albumId))
+		const unsubscribe = getPhotosByAlbumId(albumId)
 			.onSnapshot(snapshot => {
 				setLoading(true)
 				const _photos = []
@@ -36,7 +30,6 @@ const useAlbum = (albumId) => {
 			});
 
 		return unsubscribe;
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [albumId])
 
 	return { album, photos, loading }

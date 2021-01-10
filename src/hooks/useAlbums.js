@@ -2,9 +2,8 @@
  * useAlbum Hook
  */
 import { useEffect, useState } from 'react'
-import { db } from '../firebase'
 import { useAuth } from '../contexts/AuthContext'
-
+import { getAlbumByOwnerId } from '../services/firebase'
 
 const useAlbums = () => {
 	const [albums, setAlbums] = useState([])
@@ -12,9 +11,7 @@ const useAlbums = () => {
 	const { user } = useAuth()
 
 	useEffect(() => {
-		const unsubscribe = db.collection('albums')
-			.where('owner_id', '==', user.uid)
-			.orderBy('title')
+		const unsubscribe = getAlbumByOwnerId(user.uid)
 			.onSnapshot(snapshot => {
 				setLoading(true)
 				const _albums = []

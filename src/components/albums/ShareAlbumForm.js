@@ -16,11 +16,6 @@ const ShareAlbumForm = ({ link }) => {
 		}
 	}
 
-	const onCancel = () => {
-		// go back to previous page
-		navigate(-1)
-	}
-
 	return (
 		<>
 			<div className="field mt-5">
@@ -37,7 +32,7 @@ const ShareAlbumForm = ({ link }) => {
 					<a href={`mailto:?subject=Album%20Review%20Available&body=Album%20review%20link:%0A${link}`} className="button is-primary">Email link</a>
 				</div>
 				<div className="control">
-					<button className="button is-primary is-light" onClick={onCancel}>Cancel</button>
+					<button className="button is-primary is-light" onClick={() => navigate(-1)}>Cancel</button>
 				</div>
 			</div>
 		</>

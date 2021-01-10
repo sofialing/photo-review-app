@@ -31,7 +31,12 @@ const Navbar = () => {
 						<div className="navbar-item">
 							<div className="buttons">
 								{user
-									? <Link className="button is-dark is-rounded is-inverted is-outlined" to="logout">Log Out</Link>
+									? (
+										<>
+											<Link className="button is-dark is-rounded is-inverted is-outlined" to="albums/create">Create Album</Link>
+											<Link className="button is-dark is-rounded is-inverted is-outlined" to="logout">Log Out</Link>
+										</>
+									)
 									: <Link className="button is-dark is-rounded is-inverted is-outlined" to="login">Log In</Link>
 								}
 							</div>

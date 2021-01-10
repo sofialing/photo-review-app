@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faClone } from '@fortawesome/free-solid-svg-icons'
-import { deletePhoto } from '../../helpers'
+import { deletePhoto } from '../../services/firebase'
 
 const PhotoCardOptions = ({ photo, selectPhoto }) => {
 	const [selected, setSelectedPhotos] = useState(false)

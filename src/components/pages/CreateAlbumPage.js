@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
-import { createAlbum } from '../../helpers'
+import { createAlbum } from '../../services/firebase'
 import CreateAlbumForm from '../albums/CreateAlbumForm'
 import Notification from '../partials/Notification'
 import imageSrc from '../../assets/images/upload.png'

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { db, storage } from '../firebase';
+import { storage } from '../firebase';
 import { useAuth } from '../contexts/AuthContext'
+import { getAlbumRef, addPhoto } from '../services/firebase'
 
 const useUploadPhotos = (photos, albumId = null) => {
 	const [uploadProgress, setUploadProgress] = useState(null);
@@ -47,11 +48,11 @@ const useUploadPhotos = (photos, albumId = null) => {
 
 				// get docRef to album
 				if (albumId) {
-					_photo.album = db.collection('albums').doc(albumId)
+					_photo.album = getAlbumRef(albumId)
 				}
 
 				// add photo to collection
-				await db.collection('photos').add(_photo)
+				await addPhoto(_photo)
 
 			}).catch(error => setError(error.message));
 		})

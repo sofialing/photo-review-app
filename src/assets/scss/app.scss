@@ -35,47 +35,14 @@ $footer-padding: 1.5rem;
 
 
 body {
-	@extend .has-navbar-fixed-top;
 	@extend .has-background-white-bis;
-	width: 100vw;
+	padding-bottom: 4.5rem;
+	padding-top: 4rem;
 	min-height: 100vh;
-	// @extend .has-background-grey-darker;
-	// width: 100vw;
-	// height: 100vh;
-	// height: calc(var(--vh, 1vh) * 100);
-
-	// @include from($tablet) {
-	// 	display: flex;
-	// 	justify-content: center;
-	// 	align-items: center;
-	// }
+	position: relative;
+	width: 100vw;
 }
 
-#app {
-	// @extend .has-background-white-ter;
-	// position: relative;
-	// height: 100vh;
-	// height: calc(var(--vh, 1vh) * 100);
-	// overflow: hidden;
-
-	// @include from($tablet) {
-	// 	box-shadow: 1px 4px 12px #00000072;
-	// 	width: 414px;
-	// 	height: 736px;
-	// }
-}
-
-// main {
-// 	position: relative;
-// 	padding-bottom: 8rem !important;
-// 	height: 100%;
-// 	overflow-y: scroll;
-// 	scrollbar-width: none;
-// 	-ms-overflow-style: none;
-// 	&::-webkit-scrollbar {
-// 		display: none;
-// 	}
-// }
 .dropzone {
 	flex: 1;
 	display: flex;
@@ -95,7 +62,6 @@ body {
 }
 
 .review-page {
-
 	svg.fa-thumbs-up,
 	svg.fa-thumbs-down {
 		@extend .has-text-grey-light;
@@ -181,3 +147,10 @@ body {
 }
 
 @import "./Navbar";
+
+.footer {
+	bottom: 0;
+	left: 0;
+	position: absolute;
+	right: 0;
+}

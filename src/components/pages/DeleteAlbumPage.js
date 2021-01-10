@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { deleteAlbum } from '../../helpers'
+import { deleteAlbum } from '../../services/firebase'
 import useAlbum from '../../hooks/useAlbum'
 import Notification from '../partials/Notification'
 import imageSrc from '../../assets/images/create-album.png'

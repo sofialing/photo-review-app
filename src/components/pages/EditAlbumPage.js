@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import useAlbum from '../../hooks/useAlbum'
 import EditAlbumForm from '../albums/EditAlbumForm'
 import Notification from '../partials/Notification'
-import { updateAlbumTitle } from '../../helpers'
+import { updateAlbumTitle } from '../../services/firebase'
 import imageSrc from '../../assets/images/create-album.png'
 
 const EditAlbumPage = () => {

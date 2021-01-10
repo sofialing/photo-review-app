@@ -17,7 +17,6 @@ import ShareAlbumPage from './components/pages/ShareAlbumPage'
 import ReviewAlbumPage from './components/pages/ReviewAlbumPage'
 import ResetPasswordPage from './components/pages/ResetPasswordPage'
 import NotFoundPage from './components/pages/NotFoundPage'
-import ReviewCompleted from './components/review/ReviewCompleted'
 import './assets/scss/app.scss'
 
 const App = () => {
@@ -63,13 +62,8 @@ const App = () => {
 							</ProtectedRoute>
 						</Route>
 						<ReviewContextProvider>
-							<Route path="/review">
-								<Route path="/:slug/:reviewId" >
-									<ReviewAlbumPage />
-								</Route>
-								<Route path="/completed">
-									<ReviewCompleted />
-								</Route>
+							<Route path="/review/:slug/:reviewId">
+								<ReviewAlbumPage />
 							</Route>
 						</ReviewContextProvider>
 						<Route path="*" element={<NotFoundPage />} />
