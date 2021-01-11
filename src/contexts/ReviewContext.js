@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from 'react'
-import { getReviewAlbumById, getPhotosByAlbumId } from '../services/firebase'
+import { getReviewAlbumById, getPhotosSnaphot } from '../services/firebase'
 import { useAuth } from './AuthContext'
 
 // Create Review Context
@@ -38,7 +38,7 @@ const ReviewContextProvider = ({ children }) => {
 	useEffect(() => {
 		if (!album) return;
 
-		const unsubscribe = getPhotosByAlbumId(album.id)
+		const unsubscribe = getPhotosSnaphot(album.id)
 			.onSnapshot(snapshot => {
 				setLoading(true)
 				const _photos = []

@@ -38,6 +38,10 @@ const AuthContextProvider = ({ children }) => {
 		return auth.signInAnonymously()
 	}
 
+	const removeGuest = () => {
+		return auth.currentUser.delete()
+	}
+
 	const contextValues = {
 		user,
 		loading,
@@ -46,6 +50,7 @@ const AuthContextProvider = ({ children }) => {
 		resetPassword,
 		createAccount,
 		authGuest,
+		removeGuest
 	}
 
 	return (

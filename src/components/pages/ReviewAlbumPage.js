@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import { useAuth } from '../../contexts/AuthContext'
 import { useReview } from '../../contexts/ReviewContext'
 import { createReviewedAlbum } from '../../services/firebase'
 import PhotosGrid from '../albums/PhotosGrid'
@@ -8,6 +9,7 @@ import AlbumNotFound from '../partials/AlbumNotFound'
 import Notification from '../partials/Notification'
 
 const ReviewAlbumPage = () => {
+	const { removeGuest } = useAuth()
 	const { reviewId } = useParams()
 	const { album, photos, loading, error, approved, rejected, setReviewId } = useReview()
 	const [notification, setNotification] = useState(null)
@@ -25,6 +27,7 @@ const ReviewAlbumPage = () => {
 
 		try {
 			await createReviewedAlbum(approved, album)
+			await removeGuest()
 			setCompleted(true)
 		} catch (error) {
 			setNotification(error.message)
