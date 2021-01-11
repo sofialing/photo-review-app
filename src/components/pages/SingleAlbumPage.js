@@ -1,3 +1,4 @@
+import moment from 'moment'
 import { useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
@@ -32,8 +33,10 @@ const SingleAlbumPage = () => {
 
 	if (loading) {
 		return (
-			<section className="album-page container">
-				<Spinner />
+			<section className="album-page section">
+				<div className="container">
+					<Spinner />
+				</div>
 			</section>
 		)
 	}
@@ -50,7 +53,10 @@ const SingleAlbumPage = () => {
 				<header className="is-flex is-justify-content-space-between">
 					<div>
 						<h1 className="title is-1 is-capitalized">{album.title}</h1>
-						<p className="subtitle">{photos.length} {photos.length === 1 ? 'photo' : 'photos'} uploaded</p>
+						<p className="subtitle">
+							{photos.length} {photos.length === 1 ? 'photo' : 'photos'} &middot;
+							{album.updated ? ` Updated  ${moment(album.updated).from()}` : ` Created ${moment(album.created).from()}`}
+						</p>
 					</div>
 					<ButtonGroup photos={photos} selectedPhotos={selectedPhotos} onCopyPhotos={onCopyPhotos} />
 				</header>

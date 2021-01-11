@@ -162,3 +162,20 @@ body {
 .button[disabled]:hover {
 	cursor: default;
 }
+
+.album-card,
+.photo-card {
+	.image {
+		overflow: hidden;
+		img {
+			transition: transform .5s cubic-bezier(0.390, 0.575, 0.565, 1.000);
+			object-fit: cover;
+			&:hover {
+				transform: scale(1.1);
+			}
+		}
+	}
+	.title {
+		font-weight: 500;
+	}
+}

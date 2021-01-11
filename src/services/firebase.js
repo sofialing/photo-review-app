@@ -14,8 +14,10 @@ import slugify from 'slugify'
  */
 export const createAlbum = (title, user) => {
 	return db.collection('albums').add({
+		created: Date.now(),
 		owner_id: user.uid,
 		owner_name: user.displayName,
+		reviewed: false,
 		review_id: nanoid(6),
 		title,
 	})
@@ -67,7 +69,9 @@ export const deletePhoto = async (id, path) => {
  * @param {String} title	The new album title
  */
 export const updateAlbumTitle = async (id, title) => {
-	return await db.collection('albums').doc(id).update({ title })
+	return await db.collection('albums')
+		.doc(id)
+		.update({ title, updated: Date.now() })
 }
 
 /**
@@ -178,6 +182,17 @@ export const getAlbumById = id => {
 export const getPhotosByAlbumId = id => {
 	return db.collection('photos')
 		.where('album', '==', db.collection('albums').doc(id))
+		.get()
+}
+
+/**
+ * Get photos snapshot by album ID
+ *
+ * @param {String} id The album ID
+ */
+export const getPhotosSnaphot = id => {
+	return db.collection('photos')
+		.where('album', '==', db.collection('albums').doc(id))
 }
 
 /**
@@ -231,4 +246,23 @@ export const addPhotosToAlbum = (photos, albumRef) => {
 			album: albumRef
 		})
 	})
+}
+
+/**
+ * Get cover photo for album
+ *
+ * @param {String} albumId
+ */
+export const getAlbumCoverPhoto = (albumId) => {
+	return db.collection('photos')
+		.where('album', '==', db.collection('albums').doc(albumId))
+		.limit(1)
+		.get()
+}
+
+
+export const setAlbumUpdated = (albumId) => {
+	return db.collection('albums')
+		.doc(albumId)
+		.update({ updated: Date.now() })
 }

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { storage } from '../firebase';
 import { useAuth } from '../contexts/AuthContext'
-import { getAlbumRef, addPhoto } from '../services/firebase'
+import { getAlbumRef, addPhoto, setAlbumUpdated } from '../services/firebase'
 
 const useUploadPhotos = (photos, albumId = null) => {
 	const [uploadProgress, setUploadProgress] = useState(null);
@@ -60,6 +60,7 @@ const useUploadPhotos = (photos, albumId = null) => {
 			.then(() => {
 				setIsSuccess(true)
 				setUploadProgress(null)
+				setAlbumUpdated(albumId)
 			})
 			.catch(err => console.log(err.code));
 

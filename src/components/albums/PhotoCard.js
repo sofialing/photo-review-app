@@ -3,9 +3,9 @@ import PhotoCardOptions from '../partials/PhotoCardOptions'
 
 const PhotoCard = ({ photo, setSelectedPhotos, reviewMode = false }) => {
 	return (
-		<div className="card">
+		<div className="card photo-card">
 			<div className="card-image">
-				<figure className="image">
+				<figure className="image is-square">
 					<img src={photo.url} alt={photo.name} title={photo.name} />
 				</figure>
 			</div>
