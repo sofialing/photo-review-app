@@ -154,3 +154,11 @@ body {
 	position: absolute;
 	right: 0;
 }
+.button.is-disabled {
+	@extend .button[disabled];
+	pointer-events: none;
+}
+.button[disabled],
+.button[disabled]:hover {
+	cursor: default;
+}

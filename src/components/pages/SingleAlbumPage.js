@@ -45,7 +45,7 @@ const SingleAlbumPage = () => {
 						<h1 className="title is-1 is-capitalized">{album.title}</h1>
 						<p className="subtitle">{photos.length} {photos.length === 1 ? 'photo' : 'photos'} uploaded</p>
 					</div>
-					<ButtonGroup selectedPhotos={selectedPhotos} onCopyPhotos={onCopyPhotos} />
+					<ButtonGroup photos={photos} selectedPhotos={selectedPhotos} onCopyPhotos={onCopyPhotos} />
 				</header>
 				<PhotosGrid photos={photos} setSelectedPhotos={setSelectedPhotos} />
 				<UploadPhotos albumId={albumId} />
