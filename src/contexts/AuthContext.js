@@ -3,9 +3,7 @@ import { auth } from '../firebase'
 
 const AuthContext = createContext()
 
-const useAuth = () => {
-	return useContext(AuthContext)
-}
+const useAuth = () => useContext(AuthContext)
 
 const AuthContextProvider = ({ children }) => {
 	const [loading, setLoading] = useState(true)
@@ -14,9 +12,7 @@ const AuthContextProvider = ({ children }) => {
 	useEffect(() => {
 		return auth.onAuthStateChanged(user => {
 			console.log('onAuthStateChanged, user', user)
-			if (user && !user.isAnonymous) {
-				setUser(user)
-			}
+			user && user.isAnonymous ? setUser(null) : setUser(user)
 			setLoading(false)
 		})
 	}, [])
@@ -39,7 +35,6 @@ const AuthContextProvider = ({ children }) => {
 	}
 
 	const authGuest = () => {
-		console.log('authenticate as guest')
 		return auth.signInAnonymously()
 	}
 
