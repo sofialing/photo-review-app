@@ -7,12 +7,13 @@ import PhotosGrid from '../albums/PhotosGrid'
 import UploadPhotos from '../albums/UploadPhotos'
 import ButtonGroup from '../albums/ButtonGroup'
 import Spinner from '../partials/Spinner'
+import AlbumNotFound from '../partials/AlbumNotFound'
 
 const SingleAlbumPage = () => {
 	const navigate = useNavigate()
 	const { user } = useAuth()
 	const { albumId } = useParams()
-	const { album, photos, loading } = useAlbum(albumId)
+	const { album, photos, loading, error } = useAlbum(albumId)
 	const [selectedPhotos, setSelectedPhotos] = useState([])
 
 	const onCopyPhotos = async () => {
@@ -34,6 +35,12 @@ const SingleAlbumPage = () => {
 			<section className="album-page container">
 				<Spinner />
 			</section>
+		)
+	}
+
+	if (error) {
+		return (
+			<AlbumNotFound message={error} />
 		)
 	}
 

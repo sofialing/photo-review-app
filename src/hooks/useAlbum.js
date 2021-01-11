@@ -1,16 +1,34 @@
+/**
+ * useAlbum Hook
+ */
 import { useEffect, useState } from 'react'
 import { getAlbumById, getPhotosByAlbumId } from '../services/firebase'
+import { useAuth } from '../contexts/AuthContext'
 
 const useAlbum = (albumId) => {
+	const { user } = useAuth()
 	const [album, setAlbum] = useState(null)
 	const [photos, setPhotos] = useState([])
 	const [loading, setLoading] = useState(true)
+	const [error, setError] = useState(null)
 
 	useEffect(() => {
 		getAlbumById(albumId)
-			.then(album => setAlbum({ id: album.id, ...album.data() }))
-			.catch(error => console.log(error))
-	}, [albumId])
+			.then(album => {
+				// check if album exists and belongs to user
+				if (album.exists && album.data().owner_id === user.uid) {
+					setAlbum({
+						id: album.id,
+						...album.data()
+					})
+				} else {
+					setError('Oh no! Could not find album.')
+				}
+			})
+			.catch(error => {
+				setError(error.message)
+			})
+	}, [albumId, user.uid])
 
 	useEffect(() => {
 		const unsubscribe = getPhotosByAlbumId(albumId)
@@ -32,7 +50,7 @@ const useAlbum = (albumId) => {
 		return unsubscribe;
 	}, [albumId])
 
-	return { album, photos, loading }
+	return { album, photos, loading, error }
 }
 
 export default useAlbum
