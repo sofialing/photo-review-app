@@ -1,74 +1,84 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import AuthContextProvider from './contexts/AuthContext'
-import ReviewContextProvider from './contexts/ReviewContext'
-import ProtectedRoute from './decorators/ProtectedRoute'
-import CreateAlbumPage from './components/pages/CreateAlbumPage'
-import LoginPage from './components/pages/LoginPage'
-import LogoutPage from './components/pages/LogoutPage'
-import Navbar from './components/partials/Navbar'
-import Footer from './components/partials/Footer'
-import LandingPage from './components/pages/LandingPage'
-import CreateAccountPage from './components/pages/CreateAccountPage'
-import AlbumsPage from './components/pages/AlbumsPage'
-import SingleAlbumPage from './components/pages/SingleAlbumPage'
-import EditAlbumPage from './components/pages/EditAlbumPage'
-import DeleteAlbumPage from './components/pages/DeleteAlbumPage'
-import ShareAlbumPage from './components/pages/ShareAlbumPage'
-import ReviewAlbumPage from './components/pages/ReviewAlbumPage'
-import ResetPasswordPage from './components/pages/ResetPasswordPage'
-import NotFoundPage from './components/pages/NotFoundPage'
-import './assets/scss/app.scss'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import SimpleReactLightbox from 'simple-react-lightbox';
+import ProtectedRoute from './decorators/ProtectedRoute';
+import AuthContextProvider from './contexts/AuthContext';
+import ReviewContextProvider from './contexts/ReviewContext';
+import Album from './pages/Album';
+import Albums from './pages/Albums';
+import CreateAccount from './pages/CreateAccount';
+import CreateAlbum from './pages/CreateAlbum';
+import DeleteAlbum from './pages/DeleteAlbum';
+import EditAlbum from './pages/EditAlbum';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Logout from './pages/Logout';
+import NotFound from './pages/NotFound';
+import Profile from './pages/Profile';
+import ResetPassword from './pages/ResetPassword';
+import ReviewAlbum from './pages/ReviewAlbum';
+import ShareAlbum from './pages/ShareAlbum';
+import Navbar from './components/layout/Navbar';
+import Container from './components/layout/Container';
+import Footer from './components/layout/Footer';
+import './assets/scss/main.scss';
 
 const App = () => {
 	return (
 		<Router>
 			<AuthContextProvider>
 				<Navbar />
-				<main>
-					<Routes>
-						<Route path="/">
-							<LandingPage />
-						</Route>
-						<Route path="login">
-							<LoginPage />
-						</Route>
-						<ProtectedRoute path="/logout">
-							<LogoutPage />
-						</ProtectedRoute>
-						<Route path="create-account">
-							<CreateAccountPage />
-						</Route>
-						<Route path="reset-password">
-							<ResetPasswordPage />
-						</Route>
-						<Route path="albums">
-							<ProtectedRoute path="/">
-								<AlbumsPage />
-							</ProtectedRoute>
-							<ProtectedRoute path="/:albumId">
-								<SingleAlbumPage />
-							</ProtectedRoute>
-							<ProtectedRoute path="/:albumId/edit">
-								<EditAlbumPage />
-							</ProtectedRoute>
-							<ProtectedRoute path="/:albumId/delete">
-								<DeleteAlbumPage />
-							</ProtectedRoute>
-							<ProtectedRoute path="/:albumId/share">
-								<ShareAlbumPage />
-							</ProtectedRoute>
-							<ProtectedRoute path="/create">
-								<CreateAlbumPage />
-							</ProtectedRoute>
-						</Route>
-						<ReviewContextProvider>
-							<Route path="/review/:slug/:reviewId">
-								<ReviewAlbumPage />
+				<Container>
+					<SimpleReactLightbox>
+						<Routes>
+							<Route path="/">
+								<Home />
 							</Route>
-						</ReviewContextProvider>
-						<Route path="*" element={<NotFoundPage />} />
-					</Routes>
-				</main>
+							<ProtectedRoute path="albums">
+								<Route path="/">
+									<Albums />
+								</Route>
+								<Route path="/:albumId">
+									<Route path="/">
+										<Album />
+									</Route>
+									<Route path="/edit">
+										<EditAlbum />
+									</Route>
+									<Route path="/delete">
+										<DeleteAlbum />
+									</Route>
+									<Route path="/share">
+										<ShareAlbum />
+									</Route>
+								</Route>
+							</ProtectedRoute>
+							<ProtectedRoute path="create-album">
+								<CreateAlbum />
+							</ProtectedRoute>
+							<Route path="create-account">
+								<CreateAccount />
+							</Route>
+							<Route path="login">
+								<Login />
+							</Route>
+							<ProtectedRoute path="/logout">
+								<Logout />
+							</ProtectedRoute>
+							<ProtectedRoute path="profile">
+								<Profile />
+							</ProtectedRoute>
+							<Route path="reset-password">
+								<ResetPassword />
+							</Route>
+							<ReviewContextProvider>
+								<Route path="/review/:slug/:reviewId">
+									<ReviewAlbum />
+								</Route>
+							</ReviewContextProvider>
+							<Route path="*" element={<NotFound />} />
+						</Routes>
+					</SimpleReactLightbox>
+				</Container>
 				<Footer />
 			</AuthContextProvider>
 		</Router>

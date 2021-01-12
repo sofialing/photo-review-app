@@ -1,0 +1,57 @@
+.card {
+	svg.svg-inline--fa {
+		@extend .has-text-grey-light;
+		transition: transform .3s ease-in-out, color .3s ease-in-out;
+		&:hover {
+			@extend .has-text-primary;
+			transform: scale(1.2);
+		}
+		@include until($tablet) {
+			font-size: 1.5rem;
+		}
+	}
+
+	svg.fa-thumbs-up:hover,
+	svg.fa-thumbs-up.is-active {
+		@extend .has-text-success;
+		cursor: pointer;
+	}
+
+	svg.fa-thumbs-down:hover,
+	svg.fa-thumbs-down.is-active {
+		@extend .has-text-danger;
+		cursor: pointer;
+	}
+
+	svg.fa-clone.is-active:hover,
+	svg.fa-clone.is-active {
+		@extend .has-text-primary;
+		cursor: pointer;
+	}
+
+	svg.fa-trash.is-disabled:hover {
+		@extend .has-text-grey-light;
+		transform: scale(1);
+	}
+
+	&.album-card,
+	&.photo-card {
+		.image {
+			overflow: hidden;
+			img {
+				transition: transform .5s cubic-bezier(0.390, 0.575, 0.565, 1.000);
+				object-fit: cover;
+				&:hover {
+					transform: scale(1.1);
+				}
+			}
+		}
+		.title {
+			font-weight: 500;
+		}
+	}
+
+}
+
+
+

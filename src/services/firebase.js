@@ -1,138 +1,171 @@
-/* eslint-disable no-useless-escape */
 /**
- * Firebase Services
+ * Cloud Firestore & Storage Services
  */
+
 import { db, storage } from '../firebase'
 import { nanoid } from 'nanoid'
 import slugify from 'slugify'
 
 /**
- * Create new album in Firebase
+ * Create a new album in Cloud Firestore
  *
- * @param {String} title
- * @param {Object} user
+ * @param {String} title	The title of the new album
+ * @param {Object} user		The owner of the new album
  */
 export const createAlbum = (title, user) => {
 	return db.collection('albums').add({
-		created: Date.now(),
-		owner_id: user.uid,
-		owner_name: user.displayName,
-		reviewed: false,
-		review_id: nanoid(6),
+		createdAt: Date.now(),
+		ownerId: user.uid,
+		ownerName: user.displayName,
+		reviewId: nanoid(6),
 		title,
+		updatedAt: null
 	})
 }
 
 /**
- * Delete an album and its photos from Firebase
+ * Delete an album from Cloud Firestore
  *
- * @param {String} id		The id of the album to delete
+ * @param {String} albumId	The ID of the album
  */
-export const deleteAlbum = async id => {
+export const deleteAlbum = (albumId) => {
 	// check if album has photos, if so delete them first
-	const snapshot = await db.collection('photos')
-		.where('album', '==', db.collection('albums').doc(id))
-		.get()
-
-	if (!snapshot.empty) {
-		// album has photos to delete
-		snapshot.docs.forEach(async doc => {
-			await deletePhoto(doc.id, doc.data().path)
-		});
-	}
-
-	// delete document from firestore
-	await db.collection('albums').doc(id).delete()
-}
-
-/**
- * Delete an photo from Firebase and storage
- *
- * @param {String} id		The id of the photo to delete
- * @param {String} path		The path of the photo to delete
- */
-export const deletePhoto = async (id, path) => {
-	// delete document from firestore
-	await db.collection('photos').doc(id).delete();
-
-	// check if photo exists in other albums, if not delete it from storage
-	const photos = await db.collection('photos').where('path', '==', path).get()
-	if (photos.empty) {
-		await storage.ref(path).delete()
-	}
-}
-
-/**
- * Update album title
- *
- * @param {String} id		The id of the album to update
- * @param {String} title	The new album title
- */
-export const updateAlbumTitle = async (id, title) => {
-	return await db.collection('albums')
-		.doc(id)
-		.update({ title, updated: Date.now() })
-}
-
-/**
- * Get review link for album (review/slug/review_id)
- *
- * @param {String} id		The id of the album to share
- */
-export const getReviewLink = async (id) => {
-	const doc = await db.collection('albums').doc(id).get()
-	const { title, review_id } = doc.data()
-
-	return `${window.location.origin}/review/${slugify(title)}/${review_id}`
-}
-
-/**
- * Create new album with photos
- *
- * @param {Array} photos	Photos to add to album
- * @param {String} title	Title of album
- * @param {Object} user 	Owner of album
- */
-export const createNewAlbum = async (photos, title, user) => {
-	const album = {
-		owner_id: user.uid,
-		owner_name: user.displayName,
-		review_id: nanoid(6),
-		title: `${title}_copy`,
-	}
-
-	const albumRef = db.collection('albums')
-		.add(album)
-		.then(albumRef => {
-			photos.forEach(async photo => {
-				await db.collection('photos').add({
-					...photo,
-					album: albumRef
-				})
+	db.collection('photos')
+		.where('album', '==', db.collection('albums').doc(albumId)).get()
+		.then(snapshot => {
+			if (snapshot.empty) {
+				return;
+			}
+			snapshot.docs.forEach(async doc => {
+				await deletePhoto(doc.id, doc.data().path);
 			})
 		})
 
-	// try {
-	// 	// create new album
-	// 	const albumRef = await db.collection('albums').add({
-	// 		owner_id: user.uid,
-	// 		owner_name: user.displayName,
-	// 		review_id: nanoid(6),
-	// 		title: `${title}_copy`,
-	// 	})
+	return db.collection('albums').doc(albumId).delete();
+}
 
-	// 	// add photos to new album
-	// 	photos.forEach(async photo => {
-	// 		await db.collection('photos').add({
-	// 			...photo,
-	// 			album: albumRef
-	// 		})
-	// 	})
+/**
+ * Delete a photo from Cloud Firestore
+ *
+ * @param {String} photoId	The ID of the photo
+ * @param {String} path 	The path to the photo
+ */
+export const deletePhoto = (photoId, path) => {
+	return db.collection('photos').doc(photoId).delete()
+		.then(() => deleteFromStorage(path));
+}
 
-	// 	return albumRef
-	// } catch (error) {
-	// 	console.log('something went wrong', error.message)
-	// }
+/**
+ * Delete a photo from Firebase Storage
+ *
+ * @param {String} path		The path to the photo
+ */
+export const deleteFromStorage = (path) => {
+	// check if photo exists in other albums, if so return
+	db.collection('photos').where('path', '==', path).get()
+		.then(snapshot => {
+			if (!snapshot.empty) {
+				return;
+			}
+			return storage.ref(path).delete();
+		});
+}
+
+/**
+ * Get an album by ID <-- TODO: add onSnapshot?
+ *
+ * @param {String} albumId	The ID of the album
+ */
+export const getAlbumById = (albumId) => {
+	return db.collection('albums').doc(albumId).get();
+}
+
+/**
+ * Get all albums owned by user
+ *
+ * @param {String} userId	The ID of the user
+ */
+export const getAlbumsSnapshot = (userId) => {
+	return db.collection('albums')
+		.where('ownerId', '==', userId)
+		.orderBy('createdAt', 'desc')
+}
+
+
+
+/**
+ * Search for albums by field and value
+ *
+ * @param {String} field	The document field to search in
+ * @param {String} value	The field value to search for
+ */
+export const searchAlbums = (field, value) => {
+	return db.collection('albums')
+		.where(field, '==', value)
+		.get();
+}
+
+/**
+ * Get all photos by album reference
+ *
+ * @param {String} albumId	The ID of the album
+ */
+export const getPhotos = (albumId) => {
+	return db.collection('photos')
+		.where('album', '==', getAlbumRef(albumId))
+		.get();
+}
+
+/**
+ * Get photos snapshot by album ID
+ *
+ * @param {String} albumId The album ID
+ */
+export const getPhotosSnaphot = albumId => {
+	return db.collection('photos')
+		.where('album', '==', getAlbumRef(albumId));
+}
+
+/**
+ * Update album with new data
+ *
+ * @param {String} albumId	The ID of the album to update
+ * @param {Object} data		The new album data
+ */
+export const updateAlbum = (albumId, data) => {
+	return db.collection('albums')
+		.doc(albumId)
+		.update(data);
+}
+
+/**
+ * Get reference to an album by it's ID
+ *
+ * @param {String} albumId	The ID of the album
+ */
+export const getAlbumRef = (albumId) => {
+	return db.collection('albums').doc(albumId);
+}
+
+/**
+ * Add photo to Cloud Firestore
+ *
+ * @param {Object} photo The photo to add
+ */
+export const addPhoto = (photo) => {
+	return db.collection('photos').add(photo);
+}
+
+/**
+ * Get review link for album
+ *
+ * @param {String} albumId	The ID of the album
+ */
+export const getReviewLink = async (albumId) => {
+	const album = await getAlbumById(albumId);
+	const { title, reviewId } = album.data();
+
+	return `${window.location.origin}/review/${slugify(title)}/${reviewId}`;
 }
 
 /**
@@ -142,127 +175,20 @@ export const createNewAlbum = async (photos, title, user) => {
  * @param {Object} albumRef	Album used as reference
  */
 export const createReviewedAlbum = async (photos, prevAlbum) => {
-	// get current time
 	const currentTime = new Date().toISOString().slice(0, 10)
+	const title = `${prevAlbum.title}_reviewed_${currentTime}`
 
 	// create new album instance
-	const album = {
-		owner_id: prevAlbum.owner_id,
-		owner_name: prevAlbum.owner_name,
-		review_id: nanoid(6),
-		title: `${prevAlbum.title}_reviewed_${currentTime}`,
-	}
+	const albumRef = await createAlbum(title, {
+		uid: prevAlbum.ownerId,
+		displayName: prevAlbum.ownerName
+	})
 
-	return db.collection('albums')
-		.add(album)
-		.then(albumRef => {
-			photos.forEach(async photo => {
-				await db.collection('photos').add({
-					...photo,
-					album: albumRef
-				})
-			})
-		})
-}
-
-/**
- * Get an album by ID
- *
- * @param {String} id The album ID
- */
-export const getAlbumById = id => {
-	return db.collection('albums').doc(id).get()
-}
-
-/**
- * Get photos by album ID
- *
- * @param {String} id The album ID
- */
-export const getPhotosByAlbumId = id => {
-	return db.collection('photos')
-		.where('album', '==', db.collection('albums').doc(id))
-		.get()
-}
-
-/**
- * Get photos snapshot by album ID
- *
- * @param {String} id The album ID
- */
-export const getPhotosSnaphot = id => {
-	return db.collection('photos')
-		.where('album', '==', db.collection('albums').doc(id))
-}
-
-/**
- * Get an album by review ID
- *
- * @param {String} id The review ID
- */
-export const getReviewAlbumById = id => {
-	return db.collection('albums')
-		.where('review_id', '==', id)
-		.get()
-}
-
-/**
- * Get albums by owner ID
- *
- * @param {String} id The user ID
- */
-export const getAlbumByOwnerId = id => {
-	return db.collection('albums')
-		.where('owner_id', '==', id)
-		.orderBy('title')
-}
-
-/**
- * Get reference the album by ID
- * @param {String} id The album ID
- */
-export const getAlbumRef = (id) => {
-	return db.collection('albums').doc(id)
-}
-
-/**
- * Add photo reference to Firebase
- *
- * @param {Object} photo The photo to add
- */
-export const addPhoto = (photo) => {
-	return db.collection('photos').add(photo)
-}
-
-/**
- * Add photos to album
- * @param {*} photos
- * @param {*} albumRef
- */
-export const addPhotosToAlbum = (photos, albumRef) => {
+	// add approved photos to new album
 	photos.forEach(async photo => {
-		await db.collection('photos').add({
+		await addPhoto({
 			...photo,
 			album: albumRef
 		})
 	})
-}
-
-/**
- * Get cover photo for album
- *
- * @param {String} albumId
- */
-export const getAlbumCoverPhoto = (albumId) => {
-	return db.collection('photos')
-		.where('album', '==', db.collection('albums').doc(albumId))
-		.limit(1)
-		.get()
-}
-
-
-export const setAlbumUpdated = (albumId) => {
-	return db.collection('albums')
-		.doc(albumId)
-		.update({ updated: Date.now() })
 }

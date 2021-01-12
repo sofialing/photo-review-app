@@ -1,0 +1,44 @@
+/* Import fonts */
+@import url("https://use.typekit.net/rml1yom.css");
+
+/* Set colors */
+$primary: #417CF2;
+$link: $primary;
+$blue: #6B98F2;
+$light: #D0DCF2;
+$dark: #263238;
+$orange: #F2AB6D;
+
+/* Update Bulma's global variables */
+$family-sans-serif: canada-type-gibson, sans-serif;
+
+/* Update Bulma's component variables */
+$footer-background-color: $dark;
+$footer-color: #fff;
+$footer-padding: 1.5rem;
+
+/* Import Bulma's styles */
+@import "../../../node_modules/bulma/bulma.sass";
+
+.is-spaced {
+	letter-spacing: .025em;
+}
+
+.is-muted {
+	@extend .has-text-grey;
+	font-weight: 300;
+}
+
+/* Layout */
+@import "./layout/base";
+@import "./layout/footer";
+@import "./layout/navbar";
+
+/* Components */
+@import "./components/dropzone";
+@import "./components/form";
+@import "./components/spinner";
+@import "./components/cards";
+@import "./components/single-album";
+@import "./components/review-details";
+

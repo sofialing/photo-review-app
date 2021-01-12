@@ -1,15 +1,15 @@
-import { useRef } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEnvelope, faLock, faUser } from '@fortawesome/free-solid-svg-icons'
+import { useRef } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEnvelope, faLock, faUser } from '@fortawesome/free-solid-svg-icons';
 
 const CreateAccountForm = ({ onCreateAccount, loading }) => {
-	const emailRef = useRef()
-	const nameRef = useRef()
-	const passwordRef = useRef()
-	const confirmRef = useRef()
+	const emailRef = useRef();
+	const nameRef = useRef();
+	const passwordRef = useRef();
+	const confirmRef = useRef();
 
-	const onSubmit = e => {
-		e.preventDefault()
+	const onSubmit = (e) => {
+		e.preventDefault();
 
 		// create new account
 		onCreateAccount({
@@ -17,7 +17,7 @@ const CreateAccountForm = ({ onCreateAccount, loading }) => {
 			password: passwordRef.current.value,
 			confirm: confirmRef.current.value,
 			displayName: nameRef.current.value
-		})
+		});
 	}
 
 	return (
@@ -58,13 +58,11 @@ const CreateAccountForm = ({ onCreateAccount, loading }) => {
 					</span>
 				</div>
 			</div>
-			<div className="field">
-				<div className="control">
-					<button className="button is-primary mt-3" disabled={loading} type="submit">Sign Up</button>
-				</div>
+			<div className="field mt-5">
+				<button className="button is-primary" disabled={loading} type="submit">Sign up</button>
 			</div>
 		</form>
 	)
 }
 
-export default CreateAccountForm
+export default CreateAccountForm;

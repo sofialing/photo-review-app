@@ -1,0 +1,7 @@
+.spinner-container {
+	text-align: center;
+	margin: 3rem auto;
+	.fa-spinner {
+		@extend .has-text-light;
+	}
+}

@@ -1,20 +1,18 @@
-import imageSrc from '../../assets/images/photos-approved.png'
+import imageSrc from '../../assets/images/photos-approved.png';
 
 const ReviewCompleted = ({ nrOfPhotos }) => {
 	return (
-		<section className="section">
-			<div className="container">
-				<div className="columns is-centered">
-					<div className="column is-half">
-						<figure className="image is-square">
-							<img src={imageSrc} alt="photos approved" />
-						</figure>
-						<h1 className="has-text-centered">Thank you! {nrOfPhotos} photos approved.</h1>
-					</div>
-				</div>
+		<div className="columns is-centered">
+			<div className="column is-half">
+				<figure className="image is-square">
+					<a href="https://storyset.com" target="_blank" rel="noreferrer" title="Illustration by Freepik Storyset">
+						<img src={imageSrc} alt="photos approved" />
+					</a>
+				</figure>
+				<h1 className="has-text-centered">Thank you! {nrOfPhotos} photos approved.</h1>
 			</div>
-		</section>
+		</div>
 	)
 }
 
-export default ReviewCompleted
+export default ReviewCompleted;

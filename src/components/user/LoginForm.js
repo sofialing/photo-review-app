@@ -1,16 +1,16 @@
-import { useRef } from 'react'
-import { Link } from 'react-router-dom'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons'
+import { useRef } from 'react';
+import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons';
 
 const LoginForm = ({ onLogin, loading }) => {
-	const emailRef = useRef()
-	const passwordRef = useRef()
+	const emailRef = useRef();
+	const passwordRef = useRef();
 
-	const onSubmit = e => {
-		e.preventDefault()
+	const onSubmit = (e) => {
+		e.preventDefault();
 		// login with email and password
-		onLogin(emailRef.current.value, passwordRef.current.value)
+		onLogin(emailRef.current.value, passwordRef.current.value);
 	}
 
 	return (
@@ -36,13 +36,11 @@ const LoginForm = ({ onLogin, loading }) => {
 					</span>
 				</div>
 			</div>
-			<div className="field">
-				<div className="control">
-					<button className="button is-primary mt-3" disabled={loading} type="submit">Log In</button>
-				</div>
+			<div className="field mt-5">
+				<button className="button is-primary" disabled={loading} type="submit">Log in</button>
 			</div>
 		</form>
 	)
 }
 
-export default LoginForm
+export default LoginForm;

@@ -1,29 +1,31 @@
-import { useEffect, useRef } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faImages } from '@fortawesome/free-solid-svg-icons'
+import { useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faImages } from '@fortawesome/free-solid-svg-icons';
 
 const CreateAlbumForm = ({ onCreateAlbum, loading }) => {
-	const navigate = useNavigate()
-	const titleRef = useRef()
+	const navigate = useNavigate();
+	const titleRef = useRef();
 
-	useEffect(() => titleRef.current.focus(), [])
+	useEffect(() => {
+		titleRef.current.focus();
+	}, [])
 
-	const onSubmit = e => {
-		e.preventDefault()
+	const onSubmit = (e) => {
+		e.preventDefault();
 
 		if (titleRef.current.value.length < 3) {
-			return
+			return;
 		}
 		// create new album
-		onCreateAlbum(titleRef.current.value)
+		onCreateAlbum(titleRef.current.value);
 	}
 
-	const onCancel = e => {
-		e.preventDefault()
+	const onCancel = (e) => {
+		e.preventDefault();
 
 		// go back to previous page
-		navigate(-1)
+		navigate(-1);
 	}
 
 	return (
@@ -37,16 +39,12 @@ const CreateAlbumForm = ({ onCreateAlbum, loading }) => {
 					</span>
 				</div>
 			</div>
-			<div className="field is-grouped mt-5">
-				<div className="control">
-					<button className="button is-primary" disabled={loading}>Save</button>
-				</div>
-				<div className="control">
-					<button className="button is-primary is-light" disabled={loading} onClick={onCancel}>Cancel</button>
-				</div>
+			<div className="buttons mt-5">
+				<button className="button is-primary" disabled={loading}>Save</button>
+				<button className="button is-primary is-light" disabled={loading} onClick={onCancel}>Cancel</button>
 			</div>
 		</form>
 	)
 }
 
-export default CreateAlbumForm
+export default CreateAlbumForm;

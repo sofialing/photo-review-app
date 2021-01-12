@@ -1,36 +1,41 @@
-import { useState } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrash, faClone } from '@fortawesome/free-solid-svg-icons'
-import { deletePhoto, setAlbumUpdated } from '../../services/firebase'
+import { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash, faClone } from '@fortawesome/free-solid-svg-icons';
+import { deletePhoto, updateAlbum } from '../../services/firebase';
 
-const PhotoCardOptions = ({ photo, selectPhoto, albumId }) => {
-	const [selected, setSelectedPhotos] = useState(false)
+const PhotoCardOptions = ({ photo, selectPhoto }) => {
+	const [selected, setSelected] = useState(false);
 
 	const onSelectPhoto = () => {
 		// check if the photo is already selected, if so remove it from the array
 		if (selected) {
-			setSelectedPhotos(false)
 			selectPhoto(prevState => {
-				prevState.filter(item => item.id !== photo.id)
+				return prevState.filter(item => item.id !== photo.id);
 			})
-			return
+			setSelected(false);
+			return;
 		}
 
 		// add photo to array of selected photos
-		selectPhoto(prevState => [...prevState, photo])
-		setSelectedPhotos(true)
+		selectPhoto(prevState => [...prevState, photo]);
+		setSelected(true);
 	}
 
 	const onDeletePhoto = async () => {
 		// check if the photo is selected, if so return
 		if (selected) {
-			return
+			return;
 		}
 
 		// delete photo and update album
-		await deletePhoto(photo.id, photo.path)
-		await setAlbumUpdated(photo.album.id)
+		try {
+			await deletePhoto(photo.id, photo.path);
+			await updateAlbum(photo.album.id, { updatedAt: Date.now() });
+		} catch (error) {
+			console.log(error.message);
+		}
 	}
+
 	return (
 		<footer className="card-footer">
 			<div className="card-footer-item">
@@ -53,4 +58,4 @@ const PhotoCardOptions = ({ photo, selectPhoto, albumId }) => {
 	)
 }
 
-export default PhotoCardOptions
+export default PhotoCardOptions;

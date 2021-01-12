@@ -1,6 +1,6 @@
-import { Link } from 'react-router-dom'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrash, faShareSquare, faEdit } from '@fortawesome/free-solid-svg-icons'
+import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash, faShareSquare, faEdit } from '@fortawesome/free-solid-svg-icons';
 
 const AlbumCardOptions = ({ albumId }) => {
 	return (
@@ -24,4 +24,4 @@ const AlbumCardOptions = ({ albumId }) => {
 	)
 }
 
-export default AlbumCardOptions
+export default AlbumCardOptions;

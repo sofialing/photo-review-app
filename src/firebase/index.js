@@ -1,10 +1,10 @@
 /**
  * Initialize Firebase and Firestore
  */
-import firebase from 'firebase/app'
-import 'firebase/auth'
-import 'firebase/firebase-firestore'
-import 'firebase/storage'
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/firebase-firestore';
+import 'firebase/storage';
 
 // Firebase configuration from environment
 const firebaseConfig = {
@@ -17,7 +17,7 @@ const firebaseConfig = {
 }
 
 // initialize Firebase
-firebase.initializeApp(firebaseConfig)
+firebase.initializeApp(firebaseConfig);
 
 // get Firebase instances
 const auth = firebase.auth();

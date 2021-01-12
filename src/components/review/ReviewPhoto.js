@@ -1,31 +1,35 @@
-import { useState } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faThumbsUp, faThumbsDown } from '@fortawesome/free-solid-svg-icons'
-import { useReview } from '../../contexts/ReviewContext'
+import { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faThumbsUp, faThumbsDown } from '@fortawesome/free-solid-svg-icons';
+import { useReview } from '../../contexts/ReviewContext';
 
 const ReviewPhoto = ({ photo }) => {
-	const [approved, setApproved] = useState(false)
-	const [rejected, setRejected] = useState(false)
-	const { approvePhoto, rejectPhoto } = useReview()
+	const [approved, setApproved] = useState(false);
+	const [rejected, setRejected] = useState(false);
+	const { approvePhoto, rejectPhoto } = useReview();
 
 	const onReject = () => {
-		if (rejected) return
+		if (rejected) {
+			return;
+		}
 
-		setApproved(false)
-		setRejected(true)
+		setApproved(false);
+		setRejected(true);
 
 		// add photo to array of rejected photos
-		rejectPhoto(photo)
+		rejectPhoto(photo);
 	}
 
 	const onApprove = () => {
-		if (approved) return
+		if (approved) {
+			return;
+		}
 
-		setRejected(false)
-		setApproved(true)
+		setRejected(false);
+		setApproved(true);
 
 		// add photo to array of approved photos
-		approvePhoto(photo)
+		approvePhoto(photo);
 	}
 
 	return (
@@ -35,7 +39,6 @@ const ReviewPhoto = ({ photo }) => {
 					className={rejected ? 'is-active' : ''}
 					icon={faThumbsDown}
 					onClick={onReject}
-					size="lg"
 					title="Reject photo"
 				/>
 			</div>
@@ -44,7 +47,6 @@ const ReviewPhoto = ({ photo }) => {
 					className={approved ? 'is-active' : ''}
 					icon={faThumbsUp}
 					onClick={onApprove}
-					size="lg"
 					title="Approve photo"
 				/>
 			</div>
@@ -52,4 +54,4 @@ const ReviewPhoto = ({ photo }) => {
 	)
 }
 
-export default ReviewPhoto
+export default ReviewPhoto;

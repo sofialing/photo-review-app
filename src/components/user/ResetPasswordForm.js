@@ -1,28 +1,30 @@
-import { useEffect, useRef } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
+import { useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 
 const ResetPasswordForm = ({ onResetPassword, loading }) => {
-	const navigate = useNavigate()
-	const emailRef = useRef()
+	const navigate = useNavigate();
+	const emailRef = useRef();
 
-	useEffect(() => emailRef.current.focus(), [])
+	useEffect(() => {
+		emailRef.current.focus();
+	}, [])
 
-	const onSubmit = e => {
-		e.preventDefault()
+	const onSubmit = (e) => {
+		e.preventDefault();
 
 		// reset password
 		if (emailRef.current.value) {
-			onResetPassword(emailRef.current.value)
+			onResetPassword(emailRef.current.value);
 		}
 	}
 
-	const onCancel = e => {
-		e.preventDefault()
+	const onCancel = (e) => {
+		e.preventDefault();
 
 		// go back to previous page
-		navigate(-1)
+		navigate(-1);
 	}
 
 	return (
@@ -36,13 +38,9 @@ const ResetPasswordForm = ({ onResetPassword, loading }) => {
 					</span>
 				</div>
 			</div>
-			<div className="field is-grouped mt-5">
-				<div className="control">
-					<button className="button is-primary" disabled={loading}>Reset</button>
-				</div>
-				<div className="control">
-					<button className="button is-primary is-light" disabled={loading} onClick={onCancel}>Cancel</button>
-				</div>
+			<div className="buttons mt-5">
+				<button className="button is-primary" disabled={loading}>Reset</button>
+				<button className="button is-primary is-light" disabled={loading} onClick={onCancel}>Cancel</button>
 			</div>
 		</form>
 	)

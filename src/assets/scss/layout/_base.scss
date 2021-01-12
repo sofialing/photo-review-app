@@ -1,0 +1,11 @@
+body {
+	@extend .has-background-white-bis;
+	min-height: 100vh;
+	position: relative;
+	width: 100vw;
+	padding-bottom: 4.5rem;
+
+	@include from($tablet) {
+		padding-top: 4rem;
+	}
+}

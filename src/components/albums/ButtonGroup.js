@@ -1,17 +1,17 @@
-import { Link } from 'react-router-dom'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEdit, faTrash, faShareSquare, faClone } from '@fortawesome/free-solid-svg-icons'
+import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit, faTrash, faShareSquare, faClone } from '@fortawesome/free-solid-svg-icons';
 
-const ButtonGroup = ({ photos, selectedPhotos, onCopyPhotos }) => {
+const ButtonGroup = ({ hasPhotos, hasSelectedPhotos, onCopyPhotos }) => {
 	return (
 		<div className="buttons has-addons">
-			<Link to="share" className={`button ${!photos.length ? 'is-disabled' : ''}`}>
+			<Link to="share" className={`button ${!hasPhotos ? 'is-disabled' : ''}`}>
 				<span className="icon is-small has-text-primary">
 					<FontAwesomeIcon icon={faShareSquare} title="Share review link" />
 				</span>
 				<small>Share</small>
 			</Link>
-			<button disabled={!selectedPhotos.length} className="button" onClick={onCopyPhotos}>
+			<button disabled={!hasSelectedPhotos} className="button" onClick={onCopyPhotos}>
 				<span className="icon is-small has-text-primary">
 					<FontAwesomeIcon icon={faClone} title="Clone photos to new album" />
 				</span>
@@ -29,9 +29,8 @@ const ButtonGroup = ({ photos, selectedPhotos, onCopyPhotos }) => {
 				</span>
 				<small>Delete</small>
 			</Link>
-
 		</div>
 	)
 }
 
-export default ButtonGroup
+export default ButtonGroup;

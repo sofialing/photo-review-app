@@ -1,4 +1,11 @@
-import PhotoCard from './PhotoCard'
+import { SRLWrapper } from 'simple-react-lightbox';
+import PhotoCard from './PhotoCard';
+
+const options = {
+	buttons: {
+		showDownloadButton: false
+	}
+}
 
 const PhotosGrid = ({ photos, setSelectedPhotos, reviewMode = false }) => {
 	if (!photos.length) {
@@ -6,14 +13,16 @@ const PhotosGrid = ({ photos, setSelectedPhotos, reviewMode = false }) => {
 	}
 
 	return (
-		<section className="columns is-multiline mt-4 mb-6">
-			{photos.map((photo, index) => (
-				<article className="column is-3" key={index}>
-					<PhotoCard photo={photo} setSelectedPhotos={setSelectedPhotos} reviewMode={reviewMode} />
-				</article>
-			))}
-		</section>
+		<SRLWrapper options={options}>
+			<div className="columns is-multiline mt-4 mb-6">
+				{photos.map((photo, index) => (
+					<article className="column is-3" key={index}>
+						<PhotoCard photo={photo} setSelectedPhotos={setSelectedPhotos} reviewMode={reviewMode} />
+					</article>
+				))}
+			</div>
+		</SRLWrapper>
 	)
 }
 
-export default PhotosGrid
+export default PhotosGrid;

@@ -1,0 +1,23 @@
+.single-album-header {
+	@extend .mb-5;
+	.title {
+		@extend .mb-2;
+		text-transform: capitalize;
+	}
+	.subtitle {
+		@extend .is-spaced;
+		@extend .is-6;
+		@extend .mt-0;
+	}
+	.buttons {
+		margin-top: 1.5rem;
+	}
+	@include from($tablet) {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+		.buttons {
+			margin-top: 0;
+		}
+	}
+}

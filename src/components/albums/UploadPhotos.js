@@ -1,46 +1,42 @@
-import { useCallback, useState, useEffect } from 'react'
-import { useDropzone } from 'react-dropzone'
-import useUploadPhotos from '../../hooks/useUploadPhotos'
-import Notification from '../partials/Notification'
+import { useCallback, useState, useEffect } from 'react';
+import { useDropzone } from 'react-dropzone';
+import useUploadPhotos from '../../hooks/useUploadPhotos';
+import Notification from '../partials/Notification';
 
-const fileTypes = 'image/gif, image/jpeg, image/png'
+const files = 'image/gif, image/jpeg, image/png';
 
 const UploadPhotos = ({ albumId }) => {
-	const [photos, setPhotos] = useState(null)
-	const [notification, setNotification] = useState(null)
+	const [photos, setPhotos] = useState(null);
+	const [notification, setNotification] = useState(null);
 	const { uploadProgress, error, isSuccess } = useUploadPhotos(photos, albumId);
 
 	useEffect(() => {
 		if (error) {
-			setNotification(error)
+			setNotification(error);
 		}
 		if (isSuccess) {
-			setNotification('Photo(s) successfully uploaded to album.')
-			setPhotos(null)
+			setNotification('Photo(s) successfully uploaded to album.');
+			setPhotos(null);
 		}
 	}, [error, isSuccess])
 
 	const onDrop = useCallback(acceptedFiles => {
-		setNotification(null)
+		setNotification(null);
 
 		if (acceptedFiles.length) {
-			setPhotos(acceptedFiles)
+			setPhotos(acceptedFiles);
 		}
 	}, [])
 
-	const {
-		getRootProps,
-		getInputProps,
-		isDragActive,
-	} = useDropzone({ accept: fileTypes, onDrop })
+	const { getRootProps, getInputProps, isDragActive } = useDropzone({ accept: files, onDrop });
 
 	return (
 		<section className="my-6">
 			<div {...getRootProps({ className: 'dropzone' })}>
 				<input {...getInputProps()} />
 				{isDragActive
-					? <p>Drop the photos here ...</p>
-					: <p>Drag 'n' drop photos here, or click to select photos</p>
+					? <p>Drop the photos here..</p>
+					: <p>Drag and drop photos here, or click to select photos</p>
 				}
 			</div>
 			{uploadProgress !== null && (
@@ -51,4 +47,4 @@ const UploadPhotos = ({ albumId }) => {
 	)
 }
 
-export default UploadPhotos
+export default UploadPhotos;
