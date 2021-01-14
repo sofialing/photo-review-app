@@ -19,7 +19,7 @@ const NavbarMenu = () => {
 					<FontAwesomeIcon icon={faUser} title="Go to profile page" />
 					<span>Profile</span>
 				</NavLink>
-				<div className="navbar-item">
+				<div className="navbar-item navbar-buttons">
 					<NavbarMenuButtons />
 				</div>
 			</div>

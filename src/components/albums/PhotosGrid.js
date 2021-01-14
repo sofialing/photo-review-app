@@ -16,7 +16,7 @@ const PhotosGrid = ({ photos, setSelectedPhotos, reviewMode = false }) => {
 		<SRLWrapper options={options}>
 			<div className="columns is-multiline mt-4 mb-6">
 				{photos.map((photo, index) => (
-					<article className="column is-3" key={index}>
+					<article className="column is-4-desktop is-3-widescreen" key={index}>
 						<PhotoCard photo={photo} setSelectedPhotos={setSelectedPhotos} reviewMode={reviewMode} />
 					</article>
 				))}

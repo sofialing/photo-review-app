@@ -1,6 +1,5 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import { searchAlbums, getPhotosSnaphot } from '../services/firebase';
-import { useAuth } from './AuthContext';
+import { addPhoto, createAlbum, getPhotosSnaphot, searchAlbums, updateAlbum } from '../services/firebase';
 
 // Create Review Context
 const ReviewContext = createContext();
@@ -8,7 +7,6 @@ const useReview = () => useContext(ReviewContext);
 
 // Create Review Context Provider
 const ReviewContextProvider = ({ children }) => {
-	const { authGuest } = useAuth();
 	const [album, setAlbum] = useState(null);
 	const [approved, setApproved] = useState([]);
 	const [error, setError] = useState(null);
@@ -16,10 +14,6 @@ const ReviewContextProvider = ({ children }) => {
 	const [photos, setPhotos] = useState([]);
 	const [rejected, setRejected] = useState([]);
 	const [reviewId, setReviewId] = useState(null);
-
-	useEffect(() => {
-		authGuest()
-	}, [authGuest]);
 
 	useEffect(() => {
 		if (!reviewId) {
@@ -31,12 +25,15 @@ const ReviewContextProvider = ({ children }) => {
 			.then(snapshot => {
 				if (snapshot.empty) {
 					return setError('Oh no! Could not find album.');
+				} else if (snapshot.docs[0].data().reviewed) {
+					return setError('Oh no! This album has already been reviewed.');
 				}
 				setAlbum({
 					id: snapshot.docs[0].id,
 					...snapshot.docs[0].data()
 				});
 			});
+
 	}, [reviewId])
 
 	useEffect(() => {
@@ -44,22 +41,24 @@ const ReviewContextProvider = ({ children }) => {
 			return;
 		}
 
-		// listen for photos snapshot
-		const unsubscribe = getPhotosSnaphot(album.id)
-			.onSnapshot(snapshot => {
+		// get photos snapshot and listen for changes
+		const unsubscribe = getPhotosSnaphot(album.id, {
+			next: snapshot => {
 				setLoading(true);
-				const tempPhotos = [];
+				const _photos = [];
 
 				snapshot.forEach(doc => {
-					tempPhotos.push({
-						id: doc.id,
-						...doc.data(),
-					})
-				})
+					_photos.push({ id: doc.id, ...doc.data() });
+				});
 
-				setPhotos(tempPhotos);
+				setPhotos(_photos);
 				setLoading(false);
-			});
+			},
+			error: () => {
+				setError('Oh no! Something went wrong, try again.');
+				setLoading(false);
+			}
+		});
 
 		return unsubscribe;
 
@@ -94,18 +93,47 @@ const ReviewContextProvider = ({ children }) => {
 			});
 		}
 	}
+	/**
+	 * Submit approved photos and create new album
+	 */
+	const submitReview = async () => {
+		const currentTime = new Date().toISOString().slice(0, 10);
+		const title = `${album.title}_review_${currentTime}`;
+
+		try {
+			// create new album with approved photos
+			const albumRef = await createAlbum(title, {
+				uid: album.ownerId,
+				displayName: album.ownerName
+			});
+
+			approved.forEach(async photo => {
+				const _photo = { ...photo, album: albumRef };
+				delete _photo.id;
+
+				await addPhoto(_photo);
+			});
+
+			// mark album as reviewed
+			await updateAlbum(album.id, { reviewed: true });
+
+		} catch (error) {
+			setError(error.message);
+		}
+	}
 
 	const contextValues = {
 		album,
-		photos,
 		approved,
-		rejected,
-		reviewId,
-		loading,
-		error,
-		rejectPhoto,
 		approvePhoto,
-		setReviewId
+		error,
+		loading,
+		photos,
+		rejected,
+		rejectPhoto,
+		reviewId,
+		setReviewId,
+		submitReview,
 	}
 
 	return (

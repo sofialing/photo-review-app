@@ -27,9 +27,10 @@ const PhotoCardOptions = ({ photo, selectPhoto }) => {
 			return;
 		}
 
-		// delete photo and update album
 		try {
+			// delete photo
 			await deletePhoto(photo.id, photo.path);
+			// update album
 			await updateAlbum(photo.album.id, { updatedAt: Date.now() });
 		} catch (error) {
 			console.log(error.message);

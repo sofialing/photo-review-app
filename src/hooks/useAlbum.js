@@ -1,61 +1,67 @@
 /**
- * useAlbum Hook
+ * Custom hook to get an album and its photos
  */
 import { useEffect, useState } from 'react';
-import { getAlbumById, getPhotosSnaphot } from '../services/firebase';
+import { getAlbumSnapshot, getPhotosSnaphot } from '../services/firebase';
 import { useAuth } from '../contexts/AuthContext';
 
-const useAlbum = (albumId) => {
-	const { user } = useAuth();
+const useAlbum = (id) => {
 	const [album, setAlbum] = useState(null);
-	const [photos, setPhotos] = useState([]);
-	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
+	const [loading, setLoading] = useState(true);
+	const [photos, setPhotos] = useState([]);
+	const { user } = useAuth();
 
 	useEffect(() => {
-		getAlbumById(albumId)
-			.then(snapshot => {
-				// check if album exists and belongs to user
+		// get album snapshot and listen for changes
+		const unsubscribe = getAlbumSnapshot(id, {
+			next: snapshot => {
 				if (snapshot.exists && snapshot.data().ownerId === user.uid) {
-					setAlbum({
-						id: snapshot.id,
-						...snapshot.data()
-					});
+					setAlbum({ id: snapshot.id, ...snapshot.data() });
 				} else {
 					setError('Oh no! Could not find album.');
 				}
 				setLoading(false);
-			})
-			.catch(error => {
-				setError(error.message);
-			})
-	}, [albumId, user.uid])
+			},
+			error: () => {
+				setError('Oh no! Something went wrong, try again.');
+				setLoading(false);
+			}
+		});
+
+		return unsubscribe;
+
+	}, [id, user])
 
 	useEffect(() => {
 		if (!album) {
 			return;
 		}
 
-		const unsubscribe = getPhotosSnaphot(albumId)
-			.onSnapshot(snapshot => {
+		// get photos snapshot and listen for changes
+		const unsubscribe = getPhotosSnaphot(id, {
+			next: snapshot => {
 				setLoading(true);
-				const tempPhotos = [];
+				const _photos = [];
 
 				snapshot.forEach(doc => {
-					tempPhotos.push({
-						id: doc.id,
-						...doc.data(),
-					});
-				})
+					_photos.push({ id: doc.id, ...doc.data() });
+				});
 
-				setPhotos(tempPhotos);
+				setPhotos(_photos);
 				setLoading(false);
-			});
+			},
+			error: () => {
+				setError('Oh no! Something went wrong, try again.');
+				setLoading(false);
+			}
+		});
 
 		return unsubscribe;
-	}, [album, albumId])
 
-	return { album, photos, loading, error }
+	}, [album, id])
+
+	return { album, error, loading, photos }
 }
 
 export default useAlbum;

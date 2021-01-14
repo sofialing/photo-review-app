@@ -1,6 +1,7 @@
 .single-album-header {
 	@extend .mb-5;
 	.title {
+		@extend .is-1;
 		@extend .mb-2;
 		text-transform: capitalize;
 	}

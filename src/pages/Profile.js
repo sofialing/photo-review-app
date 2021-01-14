@@ -5,11 +5,12 @@ import Notification from '../components/partials/Notification';
 import imageSrc from '../assets/images/user-profile.png';
 
 const Profile = () => {
-	const { user, deleteAccount, updateProfile, updateEmail, updatePassword } = useAuth();
-	const [notification, setNotification] = useState(null);
 	const [loading, setLoading] = useState(false);
+	const [notification, setNotification] = useState(null);
+	const { user, deleteAccount, updateProfile, updateEmail, updatePassword } = useAuth();
 
 	const onDeleteAccount = async () => {
+		// reset state
 		setNotification(null);
 		setLoading(true);
 
@@ -22,6 +23,7 @@ const Profile = () => {
 	}
 
 	const onUpdateProfile = async ({ displayName, email, password, confirm }) => {
+		// reset state
 		setNotification(null);
 
 		if (password !== confirm) {

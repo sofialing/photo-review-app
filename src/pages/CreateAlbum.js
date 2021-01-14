@@ -7,12 +7,13 @@ import Notification from '../components/partials/Notification';
 import imageSrc from '../assets/images/upload.png';
 
 const CreateAlbum = () => {
-	const navigate = useNavigate();
-	const { user } = useAuth();
 	const [error, setError] = useState(false);
 	const [loading, setLoading] = useState(false);
+	const navigate = useNavigate();
+	const { user } = useAuth();
 
 	const onCreateAlbum = async (title) => {
+		// reset state
 		setError(false);
 		setLoading(true);
 

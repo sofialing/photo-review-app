@@ -1,9 +1,13 @@
-const ReviewDetails = ({ onSubmit, approved, rejected }) => {
+import { useReview } from '../../contexts/ReviewContext';
+
+const ReviewDetails = ({ onSubmit }) => {
+	const { loading, approved, rejected } = useReview();
+
 	return (
 		<aside className="level is-mobile">
 			<div className="level-left">
 				<div className="level-item">
-					<button className="button is-primary" onClick={onSubmit}>Submit</button>
+					<button disabled={loading} className="button is-primary" onClick={onSubmit}>Submit</button>
 				</div>
 			</div>
 			<div className="level-right">

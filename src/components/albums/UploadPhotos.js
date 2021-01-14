@@ -1,21 +1,21 @@
 import { useCallback, useState, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
-import useUploadPhotos from '../../hooks/useUploadPhotos';
 import Notification from '../partials/Notification';
+import ProgressBar from '../partials/ProgressBar';
+import useUploadPhotos from '../../hooks/useUploadPhotos';
 
 const files = 'image/gif, image/jpeg, image/png';
 
 const UploadPhotos = ({ albumId }) => {
 	const [photos, setPhotos] = useState(null);
 	const [notification, setNotification] = useState(null);
-	const { uploadProgress, error, isSuccess } = useUploadPhotos(photos, albumId);
+	const { progress, error, isSuccess } = useUploadPhotos(photos, albumId);
 
 	useEffect(() => {
 		if (error) {
 			setNotification(error);
 		}
 		if (isSuccess) {
-			setNotification('Photo(s) successfully uploaded to album.');
 			setPhotos(null);
 		}
 	}, [error, isSuccess])
@@ -39,9 +39,7 @@ const UploadPhotos = ({ albumId }) => {
 					: <p>Drag and drop photos here, or click to select photos</p>
 				}
 			</div>
-			{uploadProgress !== null && (
-				<progress className="progress is-primary my-5" value={uploadProgress} max="100"></progress>
-			)}
+			{progress !== null && <ProgressBar progress={progress} />}
 			{notification && <Notification message={notification} setMessage={setNotification} />}
 		</section>
 	)

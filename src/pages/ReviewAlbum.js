@@ -1,18 +1,16 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
 import { useReview } from '../contexts/ReviewContext';
-import { createReviewedAlbum } from '../services/firebase';
 import PhotosGrid from '../components/albums/PhotosGrid';
 import ReviewCompleted from '../components/review/ReviewCompleted';
 import ReviewDetails from '../components/review/ReviewDetails';
 import AlbumNotFound from '../components/partials/AlbumNotFound';
 import Notification from '../components/partials/Notification';
+import Spinner from '../components/partials/Spinner';
 
 const ReviewAlbum = () => {
-	const { removeGuest } = useAuth();
 	const { reviewId } = useParams();
-	const { album, photos, loading, error, approved, rejected, setReviewId } = useReview();
+	const { album, photos, loading, error, approved, rejected, setReviewId, submitReview } = useReview();
 	const [notification, setNotification] = useState(null);
 	const [completed, setCompleted] = useState(false);
 
@@ -28,10 +26,11 @@ const ReviewAlbum = () => {
 
 		try {
 			// create new album with approved photos
-			await createReviewedAlbum(approved, album);
+			await submitReview(approved);
+
+			// mark as completed and delete guest user from Firebase
 			setCompleted(true);
-			// delete guest user from Firebase
-			await removeGuest();
+
 		} catch (error) {
 			setNotification(error.message);
 		}
@@ -47,16 +46,22 @@ const ReviewAlbum = () => {
 		return (
 			<ReviewCompleted nrOfPhotos={approved.length} />
 		)
+
+	}
+	if (loading) {
+		return (
+			<Spinner />
+		)
 	}
 
-	return !loading && (
+	return (
 		<>
-			<header>
-				<h1 className="title is-1">{album.title}</h1>
-				<p className="subtitle">{photos.length} photos by {album.ownerName}</p>
+			<header className="review-album-header">
+				<h1 className="title">Photo Review</h1>
+				{!loading && <p className="subtitle">{album.title} &middot; {photos.length} photos by {album.ownerName}</p>}
 			</header>
 			<PhotosGrid photos={photos} reviewMode={true} />
-			<ReviewDetails onSubmit={onSubmit} approved={approved} rejected={rejected} />
+			<ReviewDetails onSubmit={onSubmit} />
 			{notification && <Notification message={notification} setMessage={setNotification} />}
 		</>
 	)

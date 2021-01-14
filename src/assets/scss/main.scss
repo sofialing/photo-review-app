@@ -33,6 +33,7 @@ $footer-padding: 1.5rem;
 @import "./layout/base";
 @import "./layout/footer";
 @import "./layout/navbar";
+@import "./layout/mobile-navbar";
 
 /* Components */
 @import "./components/dropzone";
@@ -41,4 +42,5 @@ $footer-padding: 1.5rem;
 @import "./components/cards";
 @import "./components/single-album";
 @import "./components/review-details";
+@import "./components/review-album";
 

@@ -36,17 +36,3 @@ it('renders albums component correctly for a user with no albums', async () => {
 	expect(screen.getByTestId('spinner')).toBeInTheDocument();
 	expect(await screen.findByText(/you haven't created any albums yet/i)).toBeInTheDocument();
 });
-
-it('renders albums component correctly for a user with albums', async () => {
-	render(
-		<AuthContext.Provider value={{ user: { uid: 'FcHmf33rYfgW8qAXskY17grwmLj2' } }}>
-			<BrowserRouter>
-				<Albums />
-			</BrowserRouter>
-		</AuthContext.Provider>
-	);
-
-	expect(screen.getByText(/albums/i)).toBeInTheDocument();
-	expect(screen.getByTestId('spinner')).toBeInTheDocument();
-	expect(await screen.findByTestId('albums-grid')).toBeInTheDocument();
-});

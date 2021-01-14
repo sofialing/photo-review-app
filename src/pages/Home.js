@@ -1,7 +1,10 @@
 import { Link } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 import imageSrc from '../assets/images/photo-sharing.png';
 
 const Home = () => {
+	const { user } = useAuth();
+
 	return (
 		<div className="columns is-vcentered is-flex-direction-row-reverse">
 			<div className="column is-5 is-offset-2">
@@ -16,14 +19,19 @@ const Home = () => {
 				<p className="subtitle is-5 is-muted is-spaced">
 					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut.
 				</p>
-				<div className="buttons my-5">
-					<Link to="/create-account" className="button is-rounded is-primary is-spaced">
-						Get started
-					</Link>
-					<Link to="/login" className="button is-rounded is-spaced is-primary is-outlined">
-						Log in
-					</Link>
-				</div>
+				{user
+					? (
+						<div className="buttons my-5">
+							<Link to="/create-album" className="button is-rounded is-primary is-spaced">Create album</Link>
+							<Link to="/logout" className="button is-rounded is-spaced is-primary is-outlined">Log out</Link>
+						</div>
+					) : (
+						<div className="buttons my-5">
+							<Link to="/create-account" className="button is-rounded is-primary is-spaced">Get started</Link>
+							<Link to="/login" className="button is-rounded is-spaced is-primary is-outlined">Log in</Link>
+						</div>
+					)
+				}
 			</div>
 		</div>
 	)

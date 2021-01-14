@@ -7,18 +7,18 @@ import Notification from '../components/partials/Notification';
 import imageSrc from '../assets/images/create-album.png';
 
 const EditAlbum = () => {
-	const navigate = useNavigate();
-	const { albumId } = useParams();
-	const { album } = useAlbum(albumId);
 	const [error, setError] = useState(false);
 	const [loading, setLoading] = useState(false);
+	const { albumId } = useParams();
+	const { album } = useAlbum(albumId);
+	const navigate = useNavigate();
 
 	const onSaveAlbum = async (newTitle) => {
 		// check album title, return if it's the same as the current one
 		if (newTitle === album.title) {
 			return setError('Enter a name that is not the same as the current one.');
 		}
-		// reset error and loading
+		// reset state
 		setError(false);
 		setLoading(true);
 

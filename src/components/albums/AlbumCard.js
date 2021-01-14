@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
-import { getPhotos } from '../../services/firebase';
+import { getAlbumCover } from '../../services/firebase';
 import imageSrc from '../../assets/images/image-folder.png';
 import AlbumCardOptions from '../partials/AlbumCardOptions';
 
@@ -9,13 +9,8 @@ const AlbumCard = ({ album }) => {
 	const [coverPhoto, setCoverPhoto] = useState(null)
 
 	useEffect(() => {
-		getPhotos(album.id)
-			.then(snapshot => {
-				if (snapshot.empty) {
-					return;
-				}
-				setCoverPhoto(snapshot.docs[0].data().url);
-			})
+		getAlbumCover(album.id)
+			.then(cover => setCoverPhoto(cover))
 	}, [album.id])
 
 	return (

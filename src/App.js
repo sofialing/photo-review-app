@@ -17,15 +17,17 @@ import Profile from './pages/Profile';
 import ResetPassword from './pages/ResetPassword';
 import ReviewAlbum from './pages/ReviewAlbum';
 import ShareAlbum from './pages/ShareAlbum';
-import Navbar from './components/layout/Navbar';
 import Container from './components/layout/Container';
 import Footer from './components/layout/Footer';
+import MobileHeader from './components/layout/MobileHeader';
+import Navbar from './components/layout/Navbar';
 import './assets/scss/main.scss';
 
 const App = () => {
 	return (
 		<AuthContextProvider>
 			<Navbar />
+			<MobileHeader />
 			<Container>
 				<SimpleReactLightbox>
 					<Routes>

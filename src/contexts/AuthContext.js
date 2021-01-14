@@ -11,10 +11,11 @@ const AuthContextProvider = ({ children }) => {
 	const [user, setUser] = useState(null);
 
 	useEffect(() => {
-		return auth.onAuthStateChanged(user => {
-			user && user.isAnonymous ? setUser(null) : setUser(user);
+		const unsubscribe = auth.onAuthStateChanged(user => {
+			setUser(user);
 			setLoading(false);
 		})
+		return unsubscribe;
 	}, [])
 
 	const createAccount = ({ email, password, displayName }) => {
@@ -50,22 +51,12 @@ const AuthContextProvider = ({ children }) => {
 		return user.updatePassword(newPassword);
 	}
 
-	const authGuest = () => {
-		return auth.signInAnonymously();
-	}
-
-	const removeGuest = () => {
-		return auth.currentUser.delete();
-	}
-
 	const contextValues = {
-		authGuest,
 		createAccount,
 		deleteAccount,
 		loading,
 		login,
 		logout,
-		removeGuest,
 		resetPassword,
 		updateEmail,
 		updatePassword,
@@ -80,4 +71,8 @@ const AuthContextProvider = ({ children }) => {
 	)
 }
 
-export { useAuth, AuthContext, AuthContextProvider as default }
+export {
+	useAuth,
+	AuthContext,
+	AuthContextProvider as default
+}

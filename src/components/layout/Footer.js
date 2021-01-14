@@ -9,7 +9,7 @@ const Footer = () => {
 					&copy; {new Date().getFullYear()} Photo Reviewer
 				</small>
 				<a href="https://github.com/sofialing/photo-review-app" target="_blank" rel="noreferrer">
-					<FontAwesomeIcon color="white" icon={faGithub} />
+					<FontAwesomeIcon color="white" icon={faGithub} title="GitHub repo" />
 				</a>
 			</div>
 		</footer>

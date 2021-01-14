@@ -4,6 +4,7 @@ body {
 	position: relative;
 	width: 100vw;
 	padding-bottom: 4.5rem;
+	padding-top: 3.75rem;
 
 	@include from($tablet) {
 		padding-top: 4rem;

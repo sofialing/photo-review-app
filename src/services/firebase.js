@@ -1,7 +1,6 @@
 /**
  * Cloud Firestore & Storage Services
  */
-
 import { db, storage } from '../firebase'
 import { nanoid } from 'nanoid'
 import slugify from 'slugify'
@@ -18,6 +17,7 @@ export const createAlbum = (title, user) => {
 		ownerId: user.uid,
 		ownerName: user.displayName,
 		reviewId: nanoid(6),
+		reviewed: false,
 		title,
 		updatedAt: null
 	})
@@ -72,7 +72,7 @@ export const deleteFromStorage = (path) => {
 }
 
 /**
- * Get an album by ID <-- TODO: add onSnapshot?
+ * Get an album by ID
  *
  * @param {String} albumId	The ID of the album
  */
@@ -85,13 +85,23 @@ export const getAlbumById = (albumId) => {
  *
  * @param {String} userId	The ID of the user
  */
-export const getAlbumsSnapshot = (userId) => {
+export const getAlbumsSnapshot = (userId, callback) => {
 	return db.collection('albums')
 		.where('ownerId', '==', userId)
 		.orderBy('createdAt', 'desc')
+		.onSnapshot(callback);
 }
 
-
+/**
+ * Get an album by ID
+ *
+ * @param {String} userId	The ID of the user
+ */
+export const getAlbumSnapshot = (albumId, callback) => {
+	return db.collection('albums')
+		.doc(albumId)
+		.onSnapshot(callback);
+}
 
 /**
  * Search for albums by field and value
@@ -121,9 +131,10 @@ export const getPhotos = (albumId) => {
  *
  * @param {String} albumId The album ID
  */
-export const getPhotosSnaphot = albumId => {
+export const getPhotosSnaphot = (albumId, callback) => {
 	return db.collection('photos')
-		.where('album', '==', getAlbumRef(albumId));
+		.where('album', '==', getAlbumRef(albumId))
+		.onSnapshot(callback);
 }
 
 /**
@@ -169,26 +180,15 @@ export const getReviewLink = async (albumId) => {
 }
 
 /**
- * Creates a new album with approved photos
+ * Get cover photo for album
  *
- * @param {Array} photos 	Photos to add to new album
- * @param {Object} albumRef	Album used as reference
+ * @param {String} albumId	The ID of the album
  */
-export const createReviewedAlbum = async (photos, prevAlbum) => {
-	const currentTime = new Date().toISOString().slice(0, 10)
-	const title = `${prevAlbum.title}_reviewed_${currentTime}`
-
-	// create new album instance
-	const albumRef = await createAlbum(title, {
-		uid: prevAlbum.ownerId,
-		displayName: prevAlbum.ownerName
-	})
-
-	// add approved photos to new album
-	photos.forEach(async photo => {
-		await addPhoto({
-			...photo,
-			album: albumRef
-		})
+export const getAlbumCover = (albumId) => {
+	return getPhotos(albumId).then(snapshot => {
+		if (snapshot.empty) {
+			return null;
+		}
+		return snapshot.docs[0].data().url;
 	})
 }

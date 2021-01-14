@@ -13,6 +13,7 @@ const DeleteAlbum = () => {
 	const [loading, setLoading] = useState(false);
 
 	const onDeleteAlbum = async () => {
+		// reset state
 		setError(false);
 		setLoading(true);
 

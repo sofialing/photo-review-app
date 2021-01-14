@@ -6,9 +6,9 @@ import Notification from '../components/partials/Notification';
 import imageSrc from '../assets/images/login.png';
 
 const Login = () => {
-	const { login } = useAuth();
 	const [error, setError] = useState(null);
 	const [loading, setLoading] = useState(false);
+	const { login } = useAuth();
 	const navigate = useNavigate();
 
 	const onLogin = async (email, password) => {
@@ -17,7 +17,7 @@ const Login = () => {
 			return setError('Make sure you have entered both a valid email and a password.');
 		}
 
-		// reset error and loading
+		// reset state
 		setError(null);
 		setLoading(true);
 

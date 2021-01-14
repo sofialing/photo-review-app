@@ -5,6 +5,10 @@
 		letter-spacing: .375em;
 		text-transform: uppercase;
 		padding-left: 0;
+		img {
+			padding-right: 1rem;
+			max-height: 1.5rem;
+		}
 		strong {
 			font-weight: 600;
 		}
@@ -42,28 +46,28 @@
 				justify-content: space-around;
 				margin: 0;
 				min-height: 4.5rem;
-				width:100%;
+				width: 100%;
 				.navbar-item {
-					color: $grey-lightest;
+					color: $white;
 					display: flex;
 					flex-direction: column;
 					align-items: center;
-					padding: .75rem;
-					&:hover,
-					&:focus {
-						background-color: transparent;
-					}
+					padding: 1rem .75rem;
 					svg {
 						display: block;
 					}
 					span {
 						font-size: .875rem;
-						font-weight: 300;
+						font-weight: 400;
 						line-height: 1;
-						letter-spacing: .075em;
+						letter-spacing: .1em;
 						margin-top: .675rem;
 					}
-					&:last-child {
+					&:hover,
+					&:focus {
+						background-color: transparent;
+					}
+					&.navbar-buttons {
 						display: none;
 					}
 				}

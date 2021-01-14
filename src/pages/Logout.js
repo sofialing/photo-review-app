@@ -5,19 +5,18 @@ import Notification from '../components/partials/Notification';
 import imageSrc from '../assets/images/login.png';
 
 const Logout = () => {
-	const { logout } = useAuth();
 	const [error, setError] = useState(null);
 	const [loading, setLoading] = useState(false);
+	const { logout } = useAuth();
 	const navigate = useNavigate();
 
 	const onLogout = async () => {
-		// reset error and loading
+		// reset state
 		setError(null);
 		setLoading(true);
 
 		try {
 			await logout();
-			navigate('/');
 		} catch (error) {
 			setError(error.message);
 			setLoading(false);

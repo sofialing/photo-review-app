@@ -5,16 +5,16 @@ import Notification from '../components/partials/Notification';
 import imageSrc from '../assets/images/forgot-password.png';
 
 const ResetPassword = () => {
-	const { resetPassword } = useAuth();
-	const [notification, setNotification] = useState(null);
 	const [loading, setLoading] = useState(false);
+	const [notification, setNotification] = useState(null);
+	const { resetPassword } = useAuth();
 
 	const onResetPassword = async (email) => {
+		// reset state
 		setNotification(null);
 		setLoading(true);
 
 		try {
-			// reset password by email
 			await resetPassword(email);
 			setNotification(`New password sent to ${email}.`);
 			setLoading(false);
