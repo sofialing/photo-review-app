@@ -1,4 +1,4 @@
-![screenshot](public/img/screenshot.jpg)
+![screenshot](public/img/photo-review-mockup.png)
 
 # Photo Reviewer App
 
